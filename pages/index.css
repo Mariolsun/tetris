@@ -1,0 +1,11 @@
+@import url(../blocks/field/field.css);
+@import url(../blocks/root/root.css);
+@import url(../blocks/backGround/backGround.css);
+@import url(../blocks/scoreBoard/scoreBoard.css);
+
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

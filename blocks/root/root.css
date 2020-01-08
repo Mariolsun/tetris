@@ -1,0 +1,6 @@
+.root {
+    width: 1020px;
+    height: 1360px;
+    display: flex;
+    justify-content: center;
+}

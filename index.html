@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tetяis</title>
+  <link rel="stylesheet" href="./pages/index.css">
+</head>
+<body class ='body'>
+  <div class="root">
+    <canvas id='backGround' class = 'backGround' width="1020" height="1360" >
+      обнови браузер
+    </canvas>
+    <div class="scoreBoard">
+      <div class="scoreBoard__score">
+        0
+      </div>
+
+      <div class="scoreBoard__nextFigure">
+        G
+      </div>
+    </div>
+
+    <canvas id='tetris' class = 'field' width="340" height="680" style= 'position: relative;'>
+      обнови браузер
+    </canvas>
+
+  </div> 
+  
+  <script src="script/GameFlow.js"></script>
+  <script src="script/Figure.js"></script>
+  <script src="script/Field.js"></script>
+  <script src="script/index.js"></script>
+
+  
+</body>
+</html>
+
+
+

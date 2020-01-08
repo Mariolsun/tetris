@@ -1,0 +1,10 @@
+.backGround {
+    border: 2px dotted gray;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    display: block;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}

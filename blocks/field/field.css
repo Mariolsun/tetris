@@ -1,0 +1,10 @@
+.field {
+    border: 5px solid gray;
+    background: white;
+    border-top: none;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}

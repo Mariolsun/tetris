@@ -1,0 +1,8 @@
+.scoreBoard {
+    position: absolute;
+    margin-top: 500px;
+    margin-left: 400px;
+    display: block;
+
+    font-size: 50px;
+}
