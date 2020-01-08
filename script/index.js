@@ -31,6 +31,9 @@ window.addEventListener('resize', () => {
 }) 
 */
 
+function doScore() {
+
+}
 
 function transferRows(field, backField) {
   let rowsToDelete = field.getWholeRows();
@@ -44,12 +47,10 @@ function transferRows(field, backField) {
 let game = new Game(scoreElem, nextFigureElem);
 field = new Field(gameCanvas);
 
-field.newFigure(figure, {x: 5, y: 5});
+field.newFigure(figure, {x: 5, y: 0});
 
-
-
-
-let gameFlow = setInterval(() => {
+const flowFunc = function() {
+  console.log(`in flow function, interval: ${gameFlow}`);
   if (field.isFigureFin()) {
 
     let wholeRows = field.getWholeRows();
@@ -57,27 +58,25 @@ let gameFlow = setInterval(() => {
       game.score += 10;
     } else game.score +=100;
     let gameOver = field.isGameOver()
- /*   let newFigure = new Figure();
-    newFigure.cells.forEach(cell => {
-      cell.x = 5 + cell.x; //запись в координаты фигуры координат поля
-      cell.y = cell.y - 1;
-    });
-    let contGame = field.checkCollide(newFigure.cells); */
+ 
 
     if(!gameOver) {
-      field.newFigure(new Figure(), {x: 5, y: 5});
+      field.newFigure(new Figure(), {x: 5, y: 0});
       transferRows(field, backField);
       field.deleteRows();
     } else {
+      console.log('game over!');
       clearInterval(gameFlow);
     }
   }
   
   field.moveFigure('down');
+console.log(`end of flow function, interval: ${gameFlow}`);
+}
+let test = 2;
 
-  
-
-}, 1000);
+let gameFlow = setInterval(flowFunc, 1000);
+console.log(`gameFlow created ${gameFlow}`);
 
 
 window.addEventListener('keydown', function(event) {
@@ -100,16 +99,20 @@ window.addEventListener('keydown', function(event) {
       action = 'drop';
       break;
     case 'Enter':
-      action = 'pause';
+      clearInterval(gameFlow);
       break;
   }  
+  console.log(`keydown, test variable: ${test}`)
 
   if(action === 'drop') {
+    console.log(`dropping figure, interval: ${gameFlow}`);
     event.preventDefault();
     field.dropFigure();
-    field.newFigure(new Figure(), {x: 5, y: 5});
-    transferRows(field, backField);
-    field.deleteRows();
+    flowFunc(gameFlow);
+    if(gameFlow) {
+      clearInterval(gameFlow);
+      gameFlow = setInterval(flowFunc, 1000);
+    }
   } else {
     if(action)  event.preventDefault();
    // console.log(event.key);
@@ -118,3 +121,6 @@ window.addEventListener('keydown', function(event) {
 }
 }
 })
+
+
+console.log(`end of index.js`)
