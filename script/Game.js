@@ -26,7 +26,7 @@ class Game {
     this.scoreElem = scoreElem;
     this.nextFigureElem = nextFigureElem;
     this.tick = 1000;
-    this.pause = 'true';
+    this.isRunning = false;
 
     
   }
@@ -48,10 +48,22 @@ class Game {
     this.pause = fn;
   }
 
-  async flow() {
-
+  set(tick, flowFunc) {
+    this.tick = tick;
+    this.flowFunc = flowFunc; 
   }
 
+  start() {
+    this.flow = setInterval(this.flowFunc, this.tick);
+    this.isRunning = true;
+  }
+
+  pause() {
+    clearInterval(this.flow);
+    this.isRunning = false;
+  }
+
+  
 
 
 

@@ -50,7 +50,7 @@ field = new Field(gameCanvas);
 field.newFigure(figure, {x: 5, y: 0});
 
 const flowFunc = function() {
-  console.log(`in flow function, interval: ${gameFlow}`);
+  console.log(`in flow function, interval: ${game.tick}`);
   if (field.isFigureFin()) {
 
     let wholeRows = field.getWholeRows();
@@ -66,59 +66,64 @@ const flowFunc = function() {
       field.deleteRows();
     } else {
       console.log('game over!');
-      clearInterval(gameFlow);
+      game.pause();
+   //   gameFlow.isRunning = false;
     }
   }
   
   field.moveFigure('down');
-console.log(`end of flow function, interval: ${gameFlow}`);
 }
 let test = 2;
 
-let gameFlow = setInterval(flowFunc, 1000);
-console.log(`gameFlow created ${gameFlow}`);
+game.set(1000, flowFunc);
 
 
 window.addEventListener('keydown', function(event) {
-  if(gameFlow) {
   let action;
-  switch(event.key) {
-    case 'ArrowDown':
-      action = 'down'
-      break;
-    case 'ArrowLeft':
-      action = 'left';
-      break;
-    case 'ArrowRight':
-      action = 'right';
-      break;
-    case 'ArrowUp':
-      action = 'rotate';
-      break;
-    case ' ':
-      action = 'drop';
-      break;
-    case 'Enter':
-      clearInterval(gameFlow);
-      break;
-  }  
+  if(game.isRunning) {
+
+    switch(event.key) {
+      case 'ArrowDown':
+        action = 'down'
+        break;
+      case 'ArrowLeft':
+        action = 'left';
+        break;
+      case 'ArrowRight':
+        action = 'right';
+        break;
+      case 'ArrowUp':
+        action = 'rotate';
+        break;
+      case ' ':
+        action = 'drop';
+        break;
+    }
+  }
+
+  if(event.key === 'Enter') {
+      if(game.isRunning) {
+        game.pause();
+      } else  {
+        game.start();
+      }
+    }
+
   console.log(`keydown, test variable: ${test}`)
 
   if(action === 'drop') {
-    console.log(`dropping figure, interval: ${gameFlow}`);
     event.preventDefault();
     field.dropFigure();
-    flowFunc(gameFlow);
-    if(gameFlow) {
-      clearInterval(gameFlow);
-      gameFlow = setInterval(flowFunc, 1000);
+    game.flowFunc();
+    if(game.isRunning) {
+      game.pause();
+      game.start();
     }
   } else {
     if(action)  event.preventDefault();
    // console.log(event.key);
     field.moveFigure(action);
   
-}
 }
 })
 
