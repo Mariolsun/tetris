@@ -1,8 +1,9 @@
 .field {
-    border: 5px solid gray;
+    box-shadow: 3px 3px 20px 2px rgb(48, 48, 48);
+    max-width: 300px;
+    max-height: 600px;
     background: white;
     border-top: none;
-    margin: auto;
     display: flex;
     align-items: center;
     align-content: center;

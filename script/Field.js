@@ -5,7 +5,7 @@ class Field {
     this.rowsAm = 20;
     this.columnsAm = 10;
     this.canvas =canvas;
-    this.innerBorderWidth = 1;
+    this.innerBorderWidth = 0;
     this.backgroundColor = 'white';
  //   this.texture = texture;
     this.cellWidth = (this.canvas.width - this.innerBorderWidth*this.columnsAm)/this.columnsAm;
@@ -17,6 +17,7 @@ class Field {
   }
 
   updateSizes() {
+    console.log(`updating sizes`);
     this.cellWidth = (this.canvas.width - this.innerBorderWidth*this.columnsAm)/this.columnsAm;
     this.cellHeight = (this.canvas.height - this.innerBorderWidth*this.rowsAm)/this.rowsAm;
   }
@@ -37,6 +38,7 @@ class Field {
   }
 
   render() {
+    console.log(`rendering canvas, cell: ${this.cellWidth}, ${this.cellHeight}, rows: ${this.rowsAm}`);
     this.cells.forEach((column, x) => {
       column.forEach((cell, y) => {
         this.renderCell(x, y, cell.color);
@@ -319,6 +321,8 @@ isGameOver() {
 class BackField extends Field {
   constructor(canvas) {
     super(canvas);
+    this.innerBorderWidth = 0;
+    this.backgroundColor = 'white';
   }
 
   findVacantCell() {
@@ -339,7 +343,19 @@ class BackField extends Field {
     let startCell = this.findVacantCell();
     if(startCell) {
       cells.forEach((cell, i) => {
-        this.occupyCell(startCell.x+i, startCell.y, cell.color);
+        let newColor;
+        switch (cell.color) {
+          case 'DarkRed':
+             newColor = '#150000';
+             break;
+          case 'DarkGreen':
+             newColor = '#001500';
+             break;
+          case 'DarkBlue':
+             newColor = '#000015';
+             break;
+        }
+        this.occupyCell(startCell.x+i, startCell.y, newColor);
       })
     }
   }

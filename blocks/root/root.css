@@ -1,6 +1,16 @@
 .root {
-    width: 1020px;
-    height: 1360px;
+    width: 1360px;
+    height: 1020px;
+    max-height: 100vw;
+    
+}
+
+
+
+.main {
+    
     display: flex;
+    flex-direction: row;
     justify-content: center;
+    margin-top: 150px;
 }

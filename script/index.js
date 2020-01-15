@@ -10,19 +10,13 @@ function resizeCanvas(canvas, canvasObj) {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   canvasObj.render();
+  console.log(`resized canvas`);
 }
 
 
 figure = new Figure();
 
-backField = new BackField(backCanvas);
 
-backField.rowsAm = 40;
-backField.columnsAm = 30;
-backField.updateSizes();
-backField.backgroundColor = 'gray';
-backField.initCells();
-backField.render();
 
 /*
 resizeCanvas(backCanvas, backField);
@@ -48,6 +42,18 @@ let game = new Game(scoreElem, nextFigureElem);
 field = new Field(gameCanvas);
 
 field.newFigure(figure, {x: 5, y: 0});
+
+
+backField = new BackField(backCanvas);
+
+backField.rowsAm = 40;
+BackField.innerBorderWidth = 0;
+backField.columnsAm = 30;
+backField.cellWidth = field.cellWidth;
+backField.cellHeight = field.cellHeight;
+backField.backgroundColor = 'white';
+backField.initCells();
+backField.render();
 
 const flowFunc = function() {
   console.log(`in flow function, interval: ${game.tick}`);

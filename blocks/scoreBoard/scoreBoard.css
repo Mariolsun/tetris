@@ -1,8 +1,14 @@
 .scoreBoard {
-    position: absolute;
+    box-shadow: 3px 3px 20px 2px rgb(48, 48, 48);
+    background-color: white;
+    width: 150px;
+    max-width: 150px;
+    max-height: 150px;
+    margin-left: 78px;
+ /*   position: absolute;
     margin-top: 500px;
-    margin-left: 400px;
+    margin-left: 400px; */
     display: block;
-
+    z-index: 1;
     font-size: 50px;
 }
