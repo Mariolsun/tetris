@@ -4,7 +4,7 @@ class Field {
   constructor(canvas) {
     this.rowsAm = 20;
     this.columnsAm = 10;
-    this.canvas =canvas;
+    this.canvas = canvas;
     this.innerBorderWidth = 0;
     this.backgroundColor = 'white';
  //   this.texture = texture;
@@ -13,6 +13,7 @@ class Field {
     
     this.initCells()
     this.ctx = canvas.getContext('2d');
+    this.gameOver = false;
     this.render();
   }
 
@@ -104,6 +105,11 @@ class Field {
     this.figure.cells.forEach(cell => {
       cell.x = coord.x + cell.x; //запись в координаты фигуры координат поля
       cell.y = coord.y + cell.y;
+      console.log(`rendering new figure cell ${cell.x} ${cell.y}`);
+      if(cell.y >= 0 && !this.cells[cell.x][cell.y].isEmpty) {
+        console.log('new figure collision!');
+        this.gameOver = true;
+      }
       this.occupyCell(cell.x, cell.y, figure.color);
     })
   //  console.log(`new Figure set, position: ${this.figure.cells[0].x}, ${this.figure.cells[0].y}`)
@@ -207,8 +213,8 @@ isFigureFin() {
 }
 
 
-  checkCollide(newPosition) {
-    let cellsToCheck = this.positionsDiff(this.figure.cells, newPosition).cellsToAdd;
+  checkCollide(newPosition, cells = this.figure.cells) {
+    let cellsToCheck = this.positionsDiff(cells, newPosition).cellsToAdd;
  //   console.log(`checking collide`);
 
  //   console.log(`moving figure`);
@@ -303,16 +309,6 @@ deleteRows() {
     }
 }
 
-isGameOver() {
-  let result = false;
-  this.figure.cells.forEach(cell => {
-    if(cell.y <= 0) {
-      result = true;
-    }
-  })
- // if (result) console.log(`\n\n\ngame over!\n\n\n`);
-  return result;
-}
 
 }
 

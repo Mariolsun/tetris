@@ -66,14 +66,14 @@ const flowFunc = function() {
     if (wholeRows.length === 0) {
       game.score += 10;
     } else game.score +=100;
-    let gameOver = field.isGameOver()
+    
+    transferRows(field, backField);
+    field.deleteRows();
+
+    field.newFigure(new Figure(), {x: 5, y: 0});
  
 
-    if(!gameOver) {
-      field.newFigure(new Figure(), {x: 5, y: 0});
-      transferRows(field, backField);
-      field.deleteRows();
-    } else {
+    if(field.gameOver) {
       console.log('game over!');
       game.pause();
    //   gameFlow.isRunning = false;
