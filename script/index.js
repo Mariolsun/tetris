@@ -135,3 +135,9 @@ window.addEventListener('keydown', function(event) {
 
 
 console.log(`end of index.js`)
+
+/*
+ Ошибки:
+  - когда убирается несколько рядов - внизу остается белый ряд;
+  - 
+  */
