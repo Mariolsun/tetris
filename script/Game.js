@@ -20,11 +20,12 @@ class Game {
     this._nextFigure = newFigure;
   }
 
-  constructor(scoreElem, nextFigureElem) {
+  constructor(scoreElem, nextFigureElem, pauseBannerElem) {
     this._score = 0;
     this._nextFigure = 'G';
     this.scoreElem = scoreElem;
     this.nextFigureElem = nextFigureElem;
+    this.pauseBannerElem = pauseBannerElem;
     this.tick = 1000;
     this.isRunning = false;
 
@@ -55,11 +56,13 @@ class Game {
 
   start() {
     this.flow = setInterval(this.flowFunc, this.tick);
+    this.pauseBannerElem.style.visibility = 'hidden';
     this.isRunning = true;
   }
 
   pause() {
     clearInterval(this.flow);
+    this.pauseBannerElem.style.visibility = 'visible';
     this.isRunning = false;
   }
 

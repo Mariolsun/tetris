@@ -1,0 +1,11 @@
+.pause-banner__text {
+    position: relative;
+   /* background-color: lightgrey;
+    background: radial-gradient(200px, lightgrey, white); */
+    padding: 30px;
+    border-radius: 100%;
+    margin: auto;
+    font-size: 48px;
+    color: black;
+    text-align: center;
+}

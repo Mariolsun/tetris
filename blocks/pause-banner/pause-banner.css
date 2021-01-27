@@ -1,0 +1,14 @@
+@import url(./__text/pause-banner__text.css);
+
+.pause-banner {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    background: radial-gradient(100px, lightgrey, rgba(255, 255, 255, 0.8));
+    z-index: 2;
+}

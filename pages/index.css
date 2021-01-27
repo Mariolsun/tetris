@@ -2,6 +2,7 @@
 @import url(../blocks/root/root.css);
 @import url(../blocks/backGround/backGround.css);
 @import url(../blocks/scoreBoard/scoreBoard.css);
+@import url(../blocks/pause-banner/pause-banner.css);
 
 body {
     margin: 0;

@@ -1,6 +1,6 @@
 .scoreBoard {
     box-shadow: 3px 3px 20px 2px rgb(48, 48, 48);
-    background-color: white;
+    background-color: inherit;
     width: 150px;
     max-width: 150px;
     max-height: 150px;

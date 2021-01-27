@@ -6,6 +6,8 @@ const gameCanvas = document.getElementById('tetris');
 const backCanvas = document.getElementById('backGround');
 const nextFigureElem = document.querySelector('.scoreBoard__nextFigure');
 const scoreElem = document.querySelector('.scoreBoard__score');
+const pauseBannerElem = document.querySelector('.pause-banner');
+
 function resizeCanvas(canvas, canvasObj) {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -38,7 +40,8 @@ function transferRows(field, backField) {
     })
   }
 }
-let game = new Game(scoreElem, nextFigureElem);
+
+let game = new Game(scoreElem, nextFigureElem, pauseBannerElem);
 field = new Field(gameCanvas);
 
 field.newFigure(figure, {x: 5, y: 0});
