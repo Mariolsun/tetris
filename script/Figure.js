@@ -3,7 +3,7 @@ class Figure  {
     this.type = !!type? type : this.getRandomFigure();
     this.setFigure(this.type);
     this.color = this.getRandomColor();
-    this.vector = !!vector? vector : 0;
+    this.vector = 0;
  //   console.log(`new Figure: ${this.color}, ${this.type}`);
  //   this.ctx = canvas.getContext('2d');
   //  this.relCoord

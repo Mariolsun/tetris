@@ -43,7 +43,7 @@ field = new Field(gameCanvas);
 
 field.newFigure(figure, {x: 5, y: 0});
 
-nextFigureField = new Field(nextFigureCanvas, 3, 6);
+nextFigureField = new Field(nextFigureCanvas, 3, 5);
 backField = new BackField(backCanvas);
 
 backField.rowsAm = 40; // костыль, нужно причесать класс field и его потомков 
@@ -54,8 +54,6 @@ backField.cellHeight = field.cellHeight;
 backField.backgroundColor = 'white';
 backField.initCells();
 backField.render();
-
-let nextFigure = new Figure();
 
 const flowFunc = function() {
   console.log(`in flow function, interval: ${game.tick}`);
@@ -68,13 +66,12 @@ const flowFunc = function() {
     
     transferRows(field, backField);
     field.deleteRows();
-    field.newFigure(nextFigure, {x: 5, y: 0});
-    nextFigure = new Figure()
     nextFigureField.initCells();
     
-    nextFigureField.newFigure(nextFigure, {x: 2, y: 1});
+    nextFigureField.newFigure(new Figure('I'), {x: 2, y: 0});
     nextFigureField.moveFigure('rotate');
     nextFigureField.render();
+    field.newFigure(new Figure(), {x: 5, y: 0});
  
 
     if(field.gameOver) {
@@ -145,11 +142,10 @@ console.log(`end of index.js`)
 
 /*
  Сделать:
-  - отрисовку следующей фигуры ***done***
+  - отрисовку следующей фигуры
   - отрисовку надписи game over
   - нормальный сброс игры при геймовере
  Ошибки:
   - когда убирается несколько рядов - внизу остается белый ряд (проблема именно с самым нижним рядом);
   - отступ поля сверху постоянен при изменении размеров окна
-  - исправить позиционирование новой фигуры и первоначальную ее отрисовку при старте новой игры
   */

@@ -1,5 +1,8 @@
+@import url(./__nextFigure/scoreBoard__nextFigure.css);
+
 .scoreBoard {
     box-shadow: 3px 3px 20px 2px rgb(48, 48, 48);
+    padding: 30px;
     background-color: inherit;
     width: 150px;
     max-width: 150px;

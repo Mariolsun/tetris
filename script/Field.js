@@ -1,9 +1,9 @@
 
 
 class Field {
-  constructor(canvas) {
-    this.rowsAm = 20;
-    this.columnsAm = 10;
+  constructor(canvas, rowsAm = 20, columnsAm = 10) {
+    this.rowsAm = rowsAm;
+    this.columnsAm = columnsAm;
     this.canvas = canvas;
     this.innerBorderWidth = 0;
     this.backgroundColor = 'white';
@@ -23,7 +23,7 @@ class Field {
     this.cellHeight = (this.canvas.height - this.innerBorderWidth*this.rowsAm)/this.rowsAm;
   }
   initCells () {
-//    console.log(`initializing ${this.backgroundColor}\n\n\n`);
+ //  console.log(`initializing cells ${this.backgroundColor}\n\n\n`);
     this.cells = [];
     for(let x=0; x<this.columnsAm; x++) {
       this.cells[x] = [];
@@ -33,6 +33,7 @@ class Field {
           color: this.backgroundColor,
           isEmpty: true
         }
+   //     console.log(`cell ${x} ${y} ${this.cells[x][y].color} ${this.cells[x][y].isEmpty}`);
       }
     }
 
@@ -66,7 +67,7 @@ class Field {
 
   occupyCell (x, y, color) {
     this.renderCell(x, y, color);
-    if (this.cells[x][y]) {
+    if (x<this.columnsAm && y<this.rowsAm && this.cells[x][y]) {
       this.cells[x][y].isEmpty = false;
       this.cells[x][y].color = color;
     }
@@ -106,7 +107,7 @@ class Field {
       cell.x = coord.x + cell.x; //запись в координаты фигуры координат поля
       cell.y = coord.y + cell.y;
       console.log(`rendering new figure cell ${cell.x} ${cell.y}`);
-      if(cell.y >= 0 && !this.cells[cell.x][cell.y].isEmpty) {
+      if(!!this.cells[cell.x][cell.y] && cell.y >= 0 && !this.cells[cell.x][cell.y].isEmpty) {
         console.log('new figure collision!');
         this.gameOver = true;
       }
