@@ -40,7 +40,7 @@ class Field {
   }
 
   render() {
-    console.log(`rendering canvas, cell: ${this.cellWidth}, ${this.cellHeight}, rows: ${this.rowsAm}`);
+  //  console.log(`rendering canvas, cell: ${this.cellWidth}, ${this.cellHeight}, rows: ${this.rowsAm}`);
     this.cells.forEach((column, x) => {
       column.forEach((cell, y) => {
         this.renderCell(x, y, cell.color);
@@ -65,7 +65,8 @@ class Field {
   //  if(color !== this.backgroundColor) this.ctx.drawImage(this.texture, x, y, this.cellHeight, this.cellHeight);
   }
 
-  occupyCell (x, y, color) {
+  occupyCell (x, y, color = 'grey') {
+  //  console.log(`occyping cell ${x} ${y} ${color}`);
     this.renderCell(x, y, color);
     if (x<this.columnsAm && y<this.rowsAm && this.cells[x][y]) {
       this.cells[x][y].isEmpty = false;
@@ -106,7 +107,7 @@ class Field {
     this.figure.cells.forEach(cell => {
       cell.x = coord.x + cell.x; //запись в координаты фигуры координат поля
       cell.y = coord.y + cell.y;
-      console.log(`rendering new figure cell ${cell.x} ${cell.y}`);
+ //     console.log(`rendering new figure cell ${cell.x} ${cell.y}`);
       if(!!this.cells[cell.x][cell.y] && cell.y >= 0 && !this.cells[cell.x][cell.y].isEmpty) {
         console.log('new figure collision!');
         this.gameOver = true;
@@ -153,7 +154,7 @@ class Field {
   }
 
   moveFigure(direction) {
-
+  console.log(`figure move ${direction}`);
     let newPosition = this.figure.getNewPosition(direction);
     
     if(field.checkCollide(newPosition)) {

@@ -16,7 +16,6 @@ function resizeCanvas(canvas, canvasObj) {
 }
 
 
-figure = new Figure();
 
 
 
@@ -39,8 +38,9 @@ function transferRows(field, backField) {
 }
 
 let game = new Game(scoreElem, nextFigureElem, pauseBannerElem);
-field = new Field(gameCanvas);
 
+figure = new Figure();
+field = new Field(gameCanvas);
 field.newFigure(figure, {x: 5, y: 0});
 
 nextFigureField = new Field(nextFigureCanvas, 3, 6);
@@ -55,10 +55,35 @@ backField.backgroundColor = 'white';
 backField.initCells();
 backField.render();
 
-let nextFigure = new Figure();
+let  nextFigure = new Figure()
+nextFigure.setScoreBoardPosition();
+function scoreBoardCoordsForFigure(figure) {
+  let nextFigureCoords = {};
+  switch(figure.type) {
+    case 'I':
+      nextFigureCoords = {x: 2, y: 2};
+      break;
+    case 'J':
+    case 'T':
+    case 'Z':
+      nextFigureCoords = {x: 3, y: 1};
+      break;
+    case 'L':
+    case 'S':
+      nextFigureCoords = {x: 2, y: 1};
+      break;
+    case 'O':
+      nextFigureCoords = {x: 3, y: 2};
+      break;
+  }
+  return nextFigureCoords;
+}
+
+    nextFigureField.newFigure(nextFigure, scoreBoardCoordsForFigure(nextFigure));
+    nextFigureField.render();
 
 const flowFunc = function() {
-  console.log(`in flow function, interval: ${game.tick}`);
+ // console.log(`in flow function, interval: ${game.tick}`);
   if (field.isFigureFin()) {
 
     let wholeRows = field.getWholeRows();
@@ -68,12 +93,11 @@ const flowFunc = function() {
     
     transferRows(field, backField);
     field.deleteRows();
-    field.newFigure(nextFigure, {x: 5, y: 0});
+    field.newFigure(new Figure(nextFigure.type, nextFigure.color), {x: 5, y: -2});
     nextFigure = new Figure()
+    nextFigure.setScoreBoardPosition();
     nextFigureField.initCells();
-    
-    nextFigureField.newFigure(nextFigure, {x: 2, y: 1});
-    nextFigureField.moveFigure('rotate');
+    nextFigureField.newFigure(nextFigure, scoreBoardCoordsForFigure(nextFigure));
     nextFigureField.render();
  
 
@@ -88,7 +112,7 @@ const flowFunc = function() {
 }
 let test = 2;
 
-game.set(1000, flowFunc);
+game.set(1250, flowFunc);
 
 
 window.addEventListener('keydown', function(event) {
@@ -122,7 +146,7 @@ window.addEventListener('keydown', function(event) {
       }
     }
 
-  console.log(`keydown, test variable: ${test}`)
+//  console.log(`keydown, test variable: ${test}`)
 
   if(action === 'drop') {
     event.preventDefault();

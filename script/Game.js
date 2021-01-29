@@ -6,7 +6,7 @@ class Game {
   }
 
   set score(newScore) {
-    console.log(`setting score + ${newScore}`);
+  //  console.log(`setting score + ${newScore}`);
     this._score = newScore;
     this.scoreElem.textContent = this._score;
   }

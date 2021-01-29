@@ -1,10 +1,10 @@
 class Figure  {
-  constructor(type, vector) {
+  constructor(type, color) {
     this.type = !!type? type : this.getRandomFigure();
     this.setFigure(this.type);
-    this.color = this.getRandomColor();
+    this.color = !!color? color : this.getRandomColor();
     this.vector = 0;
- //   console.log(`new Figure: ${this.color}, ${this.type}`);
+ //   console.log(`new Figure: ${this.color}, ${this.type}, vector: ${this.vector}`);
  //   this.ctx = canvas.getContext('2d');
   //  this.relCoord
 
@@ -166,224 +166,219 @@ class Figure  {
 
 
 
-  rotate() {
+  rotate(times = 1) {
   //  console.log(`in figure.rotate(), type: ${this.type}, vector: ${this.vector}`);
-
+    let iterations = times > 0 && times < 5 ? times : 1;
     let firstCell = this.cells[0];
     let newCells = [];
+//  console.log(`rotating figure ${this.color} ${this.type} ${iterations} times`);
 
- /*   
-    console.log(`coords:`);
-    this.cells.forEach(cell => {
-      console.log(`${cell.x}, ${cell.y}`);
-    })
-*/
+  for(let x = 0; x < iterations; x++) {
+      if (this.type === 'O') {
+        return [
+          {x: firstCell.x    , y: firstCell.y    },
+          {x: firstCell.x    , y: firstCell.y - 1},
+          {x: firstCell.x - 1, y: firstCell.y    },
+          {x: firstCell.x - 1, y: firstCell.y - 1},
+        ];
+      }
 
-    if (this.type === 'O') {
-      return [
-        {x: firstCell.x    , y: firstCell.y    },
-        {x: firstCell.x    , y: firstCell.y - 1},
-        {x: firstCell.x - 1, y: firstCell.y    },
-        {x: firstCell.x - 1, y: firstCell.y - 1},
-      ];
+
+      let newVector = this.getNewVector();
+    //  console.log(`new vector: ${newVector}`);
+      switch(this.type) {
+        case 'T':
+          switch(newVector) {
+            case 0:
+            
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x    , y: firstCell.y - 1},
+                {x: firstCell.x + 1, y: firstCell.y    },
+                {x: firstCell.x - 1, y: firstCell.y    },
+              );
+            break;
+            case 1:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x    , y: firstCell.y - 1},
+                {x: firstCell.x    , y: firstCell.y + 1},
+                {x: firstCell.x - 1, y: firstCell.y    },
+              );
+            break;
+            case 2:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x    , y: firstCell.y + 1},
+                {x: firstCell.x + 1, y: firstCell.y    },
+                {x: firstCell.x - 1, y: firstCell.y    },
+              );
+            break;
+            case 3:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x    , y: firstCell.y - 1},
+                {x: firstCell.x + 1, y: firstCell.y    },
+                {x: firstCell.x    , y: firstCell.y + 1},
+              );
+            break;
+          }
+        break;
+        
+        case 'I':
+          switch(newVector) {
+            case 0:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x    , y: firstCell.y + 1},
+                {x: firstCell.x    , y: firstCell.y - 1},
+                {x: firstCell.x    , y: firstCell.y + 2},
+              );
+            break;
+            case 1:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x + 1, y: firstCell.y    },
+                {x: firstCell.x + 2, y: firstCell.y    },
+                {x: firstCell.x - 1, y: firstCell.y    },
+              );
+            break;
+            case 2:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x    , y: firstCell.y + 1},
+                {x: firstCell.x    , y: firstCell.y - 1},
+                {x: firstCell.x    , y: firstCell.y - 2},
+              );
+            break;
+            case 3:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x + 1, y: firstCell.y    },
+                {x: firstCell.x - 1, y: firstCell.y    },
+                {x: firstCell.x - 2, y: firstCell.y    },
+              );
+            break;
+          }
+        break;
+        case 'J':
+          switch(newVector) {
+            case 0:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x - 1, y: firstCell.y + 1},
+                {x: firstCell.x    , y: firstCell.y + 1},
+                {x: firstCell.x    , y: firstCell.y - 1},
+              );
+            break;
+            case 1:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x - 1, y: firstCell.y    },
+                {x: firstCell.x + 1, y: firstCell.y    },
+                {x: firstCell.x + 1, y: firstCell.y + 1},
+              );
+            break;
+            case 2:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x    , y: firstCell.y + 1},
+                {x: firstCell.x    , y: firstCell.y - 1},
+                {x: firstCell.x + 1, y: firstCell.y - 1},
+              );
+            break;
+            case 3:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x - 1, y: firstCell.y    },
+                {x: firstCell.x - 1, y: firstCell.y - 1},
+                {x: firstCell.x + 1, y: firstCell.y    },
+              );
+            break;
+          }
+        break;
+        case 'L':
+          switch(newVector) {
+            case 0:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x + 1, y: firstCell.y + 1},
+                {x: firstCell.x    , y: firstCell.y - 1},
+                {x: firstCell.x    , y: firstCell.y + 1},
+              );
+            break;
+            case 1:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x + 1, y: firstCell.y    },
+                {x: firstCell.x + 1, y: firstCell.y - 1},
+                {x: firstCell.x - 1, y: firstCell.y    },
+              );
+            break;
+            case 2:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x    , y: firstCell.y + 1},
+                {x: firstCell.x    , y: firstCell.y - 1},
+                {x: firstCell.x - 1, y: firstCell.y - 1},
+              );
+            break;
+            case 3:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x + 1, y: firstCell.y    },
+                {x: firstCell.x - 1, y: firstCell.y    },
+                {x: firstCell.x - 1, y: firstCell.y + 1},
+              );
+            break;
+          }
+        break;
+        case 'S':
+          switch(newVector) {
+            case 0:
+            case 2:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x    , y: firstCell.y - 1},
+                {x: firstCell.x - 1, y: firstCell.y    },
+                {x: firstCell.x + 1, y: firstCell.y - 1},
+              );
+            break;
+            case 1:
+            case 3:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x    , y: firstCell.y - 1},
+                {x: firstCell.x + 1, y: firstCell.y + 1},
+                {x: firstCell.x + 1, y: firstCell.y    },
+              );
+            break;
+          }
+        break;
+        case 'Z':
+          switch(newVector) {
+            case 0:
+            case 2:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x    , y: firstCell.y - 1},
+                {x: firstCell.x - 1, y: firstCell.y - 1},
+                {x: firstCell.x + 1, y: firstCell.y    },
+              );
+            break;
+            case 1:
+            case 3:
+              newCells.push(
+                {x: firstCell.x    , y: firstCell.y    },
+                {x: firstCell.x - 1, y: firstCell.y    },
+                {x: firstCell.x    , y: firstCell.y - 1},
+                {x: firstCell.x - 1, y: firstCell.y + 1},
+              );
+            break;
+          }
+        break;
+      }
     }
-
-
-    let newVector = this.getNewVector();
-  //  console.log(`new vector: ${newVector}`);
-    switch(this.type) {
-      case 'T':
-        switch(newVector) {
-          case 0:
-          
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x    , y: firstCell.y - 1},
-              {x: firstCell.x + 1, y: firstCell.y    },
-              {x: firstCell.x - 1, y: firstCell.y    },
-            );
-          break;
-          case 1:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x    , y: firstCell.y - 1},
-              {x: firstCell.x    , y: firstCell.y + 1},
-              {x: firstCell.x - 1, y: firstCell.y    },
-            );
-          break;
-          case 2:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x    , y: firstCell.y + 1},
-              {x: firstCell.x + 1, y: firstCell.y    },
-              {x: firstCell.x - 1, y: firstCell.y    },
-            );
-          break;
-          case 3:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x    , y: firstCell.y - 1},
-              {x: firstCell.x + 1, y: firstCell.y    },
-              {x: firstCell.x    , y: firstCell.y + 1},
-            );
-          break;
-        }
-      break;
-      
-      case 'I':
-        switch(newVector) {
-          case 0:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x    , y: firstCell.y + 1},
-              {x: firstCell.x    , y: firstCell.y - 1},
-              {x: firstCell.x    , y: firstCell.y + 2},
-            );
-          break;
-          case 1:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x + 1, y: firstCell.y    },
-              {x: firstCell.x + 2, y: firstCell.y    },
-              {x: firstCell.x - 1, y: firstCell.y    },
-            );
-          break;
-          case 2:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x    , y: firstCell.y + 1},
-              {x: firstCell.x    , y: firstCell.y - 1},
-              {x: firstCell.x    , y: firstCell.y - 2},
-            );
-          break;
-          case 3:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x + 1, y: firstCell.y    },
-              {x: firstCell.x - 1, y: firstCell.y    },
-              {x: firstCell.x - 2, y: firstCell.y    },
-            );
-          break;
-        }
-      break;
-      case 'J':
-        switch(newVector) {
-          case 0:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x - 1, y: firstCell.y + 1},
-              {x: firstCell.x    , y: firstCell.y + 1},
-              {x: firstCell.x    , y: firstCell.y - 1},
-            );
-          break;
-          case 1:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x - 1, y: firstCell.y    },
-              {x: firstCell.x + 1, y: firstCell.y    },
-              {x: firstCell.x + 1, y: firstCell.y + 1},
-            );
-          break;
-          case 2:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x    , y: firstCell.y + 1},
-              {x: firstCell.x    , y: firstCell.y - 1},
-              {x: firstCell.x + 1, y: firstCell.y - 1},
-            );
-          break;
-          case 3:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x - 1, y: firstCell.y    },
-              {x: firstCell.x - 1, y: firstCell.y - 1},
-              {x: firstCell.x + 1, y: firstCell.y    },
-            );
-          break;
-        }
-      break;
-      case 'L':
-        switch(newVector) {
-          case 0:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x + 1, y: firstCell.y + 1},
-              {x: firstCell.x    , y: firstCell.y - 1},
-              {x: firstCell.x    , y: firstCell.y + 1},
-            );
-          break;
-          case 1:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x + 1, y: firstCell.y    },
-              {x: firstCell.x + 1, y: firstCell.y - 1},
-              {x: firstCell.x - 1, y: firstCell.y    },
-            );
-          break;
-          case 2:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x    , y: firstCell.y + 1},
-              {x: firstCell.x    , y: firstCell.y - 1},
-              {x: firstCell.x - 1, y: firstCell.y - 1},
-            );
-          break;
-          case 3:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x + 1, y: firstCell.y    },
-              {x: firstCell.x - 1, y: firstCell.y    },
-              {x: firstCell.x - 1, y: firstCell.y + 1},
-            );
-          break;
-        }
-      break;
-       case 'S':
-        switch(newVector) {
-          case 0:
-          case 2:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x    , y: firstCell.y - 1},
-              {x: firstCell.x - 1, y: firstCell.y    },
-              {x: firstCell.x + 1, y: firstCell.y - 1},
-            );
-          break;
-          case 1:
-          case 3:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x    , y: firstCell.y - 1},
-              {x: firstCell.x + 1, y: firstCell.y + 1},
-              {x: firstCell.x + 1, y: firstCell.y    },
-            );
-          break;
-        }
-      break;
-      case 'Z':
-        switch(newVector) {
-          case 0:
-          case 2:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x    , y: firstCell.y - 1},
-              {x: firstCell.x - 1, y: firstCell.y - 1},
-              {x: firstCell.x + 1, y: firstCell.y    },
-            );
-          break;
-          case 1:
-          case 3:
-            newCells.push(
-              {x: firstCell.x    , y: firstCell.y    },
-              {x: firstCell.x - 1, y: firstCell.y    },
-              {x: firstCell.x    , y: firstCell.y - 1},
-              {x: firstCell.x - 1, y: firstCell.y + 1},
-            );
-          break;
-        }
-      break;
-    }
-
   /*  console.log(`new coords:`);
     newCells.forEach(cell => {
       console.log(`${cell.x}, ${cell.y}`);
@@ -399,6 +394,25 @@ class Figure  {
 
   getNewFigure(type, vector) {
     return new Figure(type, vector);
+  }
+
+  setScoreBoardPosition() {
+    let toVector = 0;
+    switch(this.type) {
+      case 'I':
+      case 'Z':
+      case 'S':
+      case 'T':
+        toVector = 1;
+        break;
+    }
+    
+    while(toVector != this.vector) {
+      console.log(`setting figure horizontal ${this.vector} ${toVector} ${this.vector != toVector}`);
+      this.cells = this.rotate();
+      this.vector = this.getNewVector();
+    }
+    console.log(`set`);
   }
 }
 
