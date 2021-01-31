@@ -5,9 +5,6 @@ class Figure  {
     this.color = !!color? color : this.getRandomColor();
     this.vector = 0;
     this.setHorizontal();
- //   console.log(`new Figure: ${this.color}, ${this.type}, vector: ${this.vector}`);
- //   this.ctx = canvas.getContext('2d');
-  //  this.relCoord
 
   }
 
@@ -122,7 +119,6 @@ class Figure  {
   }
 
   getNewPosition(direction) {
-  //  console.log(`getting new Position`);
     let diff = {x: 0, y: 0};
       switch (direction) {
         case 'down':
@@ -168,11 +164,9 @@ class Figure  {
 
 
   rotate(times = 1) {
-  //  console.log(`in figure.rotate(), type: ${this.type}, vector: ${this.vector}`);
     let iterations = times > 0 && times < 5 ? times : 1;
     let firstCell = this.cells[0];
     let newCells = [];
-//  console.log(`rotating figure ${this.color} ${this.type} ${iterations} times`);
 
   for(let x = 0; x < iterations; x++) {
       if (this.type === 'O') {
@@ -186,7 +180,6 @@ class Figure  {
 
 
       let newVector = this.getNewVector();
-    //  console.log(`new vector: ${newVector}`);
       switch(this.type) {
         case 'T':
           switch(newVector) {
@@ -380,12 +373,7 @@ class Figure  {
         break;
       }
     }
-  /*  console.log(`new coords:`);
-    newCells.forEach(cell => {
-      console.log(`${cell.x}, ${cell.y}`);
-    })
 
-  */
     return newCells;
   }
 
@@ -410,7 +398,6 @@ class Figure  {
     }
     
     while(toVector != this.vector) {
-      console.log(`setting figure horizontal ${this.vector} ${toVector} ${this.vector != toVector}`);
       this.cells = this.rotate();
       this.vector = this.getNewVector();
     }

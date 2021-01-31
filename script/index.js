@@ -13,7 +13,6 @@ function resizeCanvas(canvas, canvasObj) {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   canvasObj.render();
-  console.log(`resized canvas`);
 }
 
 function scoreBoardCoordsForFigure(figure) {
@@ -86,7 +85,6 @@ nextFigure.setHorizontal();
     nextFigureField.render();
 
 const flowFunc = function() {
- // console.log(`in flow function, interval: ${game.tick}`);
   if (field.isFigureFin()) {
 
     let wholeRows = field.getWholeRows();
@@ -104,9 +102,7 @@ const flowFunc = function() {
  
 
     if(field.gameOver) {
-      console.log('game over!');
       game.gameOver();
-   //   gameFlow.isRunning = false;
     }
   }
   
@@ -153,7 +149,6 @@ window.addEventListener('keydown', function(event) {
       } 
     }
 
-//  console.log(`keydown, test variable: ${test}`)
 
   if(action === 'drop') {
     event.preventDefault();
@@ -165,14 +160,11 @@ window.addEventListener('keydown', function(event) {
     }
   } else {
     if(action)  event.preventDefault();
-   // console.log(event.key);
     field.moveFigure(action);
   
 }
 })
 
-
-console.log(`end of index.js`)
 
 /*
  Сделать:

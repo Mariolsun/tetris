@@ -18,12 +18,10 @@ class Field {
   }
 
   updateSizes() {
-    console.log(`updating sizes`);
     this.cellWidth = (this.canvas.width - this.innerBorderWidth*this.columnsAm)/this.columnsAm;
     this.cellHeight = (this.canvas.height - this.innerBorderWidth*this.rowsAm)/this.rowsAm;
   }
   initCells () {
- //  console.log(`initializing cells ${this.backgroundColor}\n\n\n`);
     this.cells = [];
     for(let x=0; x<this.columnsAm; x++) {
       this.cells[x] = [];
@@ -33,14 +31,12 @@ class Field {
           color: this.backgroundColor,
           isEmpty: true
         }
-   //     console.log(`cell ${x} ${y} ${this.cells[x][y].color} ${this.cells[x][y].isEmpty}`);
       }
     }
 
   }
 
   render() {
-  //  console.log(`rendering canvas, cell: ${this.cellWidth}, ${this.cellHeight}, rows: ${this.rowsAm}`);
     this.cells.forEach((column, x) => {
       column.forEach((cell, y) => {
         this.renderCell(x, y, cell.color);
@@ -59,14 +55,11 @@ class Field {
     let res = this.convertCoord(c, r);
     let x = res.x;
     let y = res.y;
- //   console.log(`rendering cell at ${x}, ${y}, width: ${this.cellWidth}, height: ${this.cellHeight}`);
     this.ctx.fillStyle = color;
     this.ctx.fillRect(x, y, this.cellWidth, this.cellHeight);
-  //  if(color !== this.backgroundColor) this.ctx.drawImage(this.texture, x, y, this.cellHeight, this.cellHeight);
   }
 
   occupyCell (x, y, color = 'grey') {
-  //  console.log(`occyping cell ${x} ${y} ${color}`);
     this.renderCell(x, y, color);
     if (x<this.columnsAm && y<this.rowsAm && this.cells[x][y]) {
       this.cells[x][y].isEmpty = false;
@@ -75,7 +68,6 @@ class Field {
   }
 
   clearCell (x, y) {
-  //  console.log(`clearing cell ${x}, ${y}`);
   let res = this.convertCoord(x, y);
     let c = res.x;
     let r = res.y;
@@ -87,10 +79,8 @@ class Field {
   }
 
   moveCell(x,y, newX, newY) {
-  //  console.log(`moving cell to ${newX}, ${newY}`)
     this.occupyCell(newX, newY, this.cells[x][y].color);
     this.clearCell(x, y);
-   // console.log(`moved cell ${this.cells[newX][newY].isEmpty}, ${this.cells[newX][newY].color}`)
     
    
   }
@@ -107,14 +97,11 @@ class Field {
     this.figure.cells.forEach(cell => {
       cell.x = coord.x + cell.x; //запись в координаты фигуры координат поля
       cell.y = coord.y + cell.y;
- //     console.log(`rendering new figure cell ${cell.x} ${cell.y}`);
       if(!!this.cells[cell.x][cell.y] && cell.y >= 0 && !this.cells[cell.x][cell.y].isEmpty) {
-        console.log('new figure collision!');
         this.gameOver = true;
       }
       this.occupyCell(cell.x, cell.y, figure.color);
     })
-  //  console.log(`new Figure set, position: ${this.figure.cells[0].x}, ${this.figure.cells[0].y}`)
   }
 
 
@@ -154,22 +141,12 @@ class Field {
   }
 
   moveFigure(direction) {
-  console.log(`figure move ${direction}`);
     let newPosition = this.figure.getNewPosition(direction);
     
     if(field.checkCollide(newPosition)) {
   
 
 
-  /*  console.log(`moving figure`);
-    this.figure.cells.forEach(cell => {
-      console.log(`${cell.x}, ${cell.y}`);
-    })
-    console.log(`new position:`)
-    newPosition.forEach(cell => {
-      console.log(`${cell.x}, ${cell.y}`);
-    })
-  */
     if(direction === 'rotate') {
       this.figure.vector = this.figure.getNewVector();
     }
@@ -194,7 +171,6 @@ class Field {
 }
 
 dropFigure() {
- // console.log(`dropping figure`);
   let color = this.figure.color
   this.figure.color = this.backgroundColor;
 
@@ -205,11 +181,9 @@ dropFigure() {
   };
   this.figure.color = color;
   this.renderFigure();
-//  console.log(`dropped figure`);
 }
 
 isFigureFin() {
- // console.log(`checking if figure is done`);
   let downPos = this.figure.getNewPosition('down');
   return !this.checkCollide(downPos);
 }
@@ -217,32 +191,23 @@ isFigureFin() {
 
   checkCollide(newPosition, cells = this.figure.cells) {
     let cellsToCheck = this.positionsDiff(cells, newPosition).cellsToAdd;
- //   console.log(`checking collide`);
-
- //   console.log(`moving figure`);
     this.figure.cells.forEach(cell => {
-  //    console.log(`${cell.x}, ${cell.y}`);
     })
- //   console.log(`new cells:`)
     cellsToCheck.forEach(cell => {
- //     console.log(`${cell.x}, ${cell.y}`);
     })
     let result = true;
 
     cellsToCheck.forEach(cell => {
-   //   console.log(`checking new cell ${cell.x}, ${cell.y}`)
       let moreThanCol = cell.x >= this.columnsAm;
       let moreThanRow = cell.y >= this.rowsAm;
       let belowCol = cell.x < 0;
       let outOfBorders = moreThanCol || moreThanRow || belowCol;
       let isEmptyCell = true;
       if (!outOfBorders && this.cells[cell.x][cell.y]) {
-  //      console.log(`something with empty cell check ${this.cells[cell.x][cell.y].isEmpty}`);
         isEmptyCell = this.cells[cell.x][cell.y].isEmpty;
       }
       else if(cell.y < 0) isEmptyCell = true;
       if(outOfBorders || !isEmptyCell) {
-  //      console.log(`collide! ${!isEmptyCell}, ${outOfBorders}`);
         result = false;
       }
       
@@ -273,7 +238,6 @@ getWholeRows() {
 }
 
 dropUpperRows(row, k) {
- // console.log(`dropping rows from ${row - 1} ${k}`)
   let isEmptyRow = false;
   
   let j = 1;
@@ -281,12 +245,10 @@ dropUpperRows(row, k) {
     isEmptyRow = true;
     for(let i = 0; i < this.columnsAm; i++) {
         if(!this.cells[i][row - j].isEmpty) {
- //         console.log(`occupied cell ${i}, ${row-j}`);
           isEmptyRow = false;
           this.moveCell(i, row - j, i, row-j+k);
       }
     }
- //   console.log(`\n\n\n`);
     j++;
   }
  
@@ -306,7 +268,6 @@ deleteRows() {
         this.clearCell(i, row);
       }
     });
-  //  console.log(`min row: ${Math.min(rows)}`);
     this.dropUpperRows(Math.min(...rows), rows.length);
     }
 }
