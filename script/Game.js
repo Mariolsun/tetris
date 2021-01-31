@@ -15,16 +15,15 @@ class Game {
     return this._nextFigure;
   }
 
-  set nextFigure(newFigure) {
+ /* set nextFigure(newFigure) {
     this.nextFigureElem.textContent = newFigure;
     this._nextFigure = newFigure;
-  }
+  } */
 
-  constructor(scoreElem, nextFigureElem, pauseBanner) {
+  constructor(scoreElem, pauseBanner) {
     this._score = 0;
     this._nextFigure = 'G';
     this.scoreElem = scoreElem;
-    this.nextFigureElem = nextFigureElem;
     this.pauseBanner = pauseBanner;
     this.tick = 1000;
     this.isRunning = false;
@@ -33,7 +32,6 @@ class Game {
   }
 
   updateStats() {
-    this.nextFigureElem.textContent = this.nextFigure;
     this.scoreElem.textContent = this.score;
   }
 

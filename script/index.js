@@ -59,11 +59,10 @@ function transferRows(field, backField) {
 }
 
 let pauseBanner = new PauseBanner(pauseBannerElem, pauseBannerText);
-let game = new Game(scoreElem, nextFigureElem, pauseBanner);
+let game = new Game(scoreElem, pauseBanner);
 
-figure = new Figure();
 field = new Field(gameCanvas);
-field.newFigure(figure, {x: 5, y: 0});
+field.newFigure(new Figure(), {x: 5, y: 0});
 
 nextFigureField = new Field(nextFigureCanvas, 2, 4);
 backField = new BackField(backCanvas);
@@ -78,11 +77,9 @@ backField.initCells();
 backField.render();
 
 let  nextFigure = new Figure()
-nextFigure.setHorizontal();
+nextFigureField.newFigure(nextFigure, scoreBoardCoordsForFigure(nextFigure));
+nextFigureField.render();
 
-
-    nextFigureField.newFigure(nextFigure, scoreBoardCoordsForFigure(nextFigure));
-    nextFigureField.render();
 
 const flowFunc = function() {
   if (field.isFigureFin()) {
@@ -95,7 +92,7 @@ const flowFunc = function() {
     transferRows(field, backField);
     field.deleteRows();
     field.newFigure(new Figure(nextFigure.type, nextFigure.color), {x: 5, y: 0});
-    nextFigure = new Figure()
+    nextFigure = new Figure();
     nextFigureField.initCells();
     nextFigureField.newFigure(nextFigure, scoreBoardCoordsForFigure(nextFigure));
     nextFigureField.render();
@@ -108,7 +105,10 @@ const flowFunc = function() {
   
   field.moveFigure('down');
 }
-let test = 2;
+
+
+
+
 
 game.set(1250, flowFunc);
 
@@ -142,8 +142,16 @@ window.addEventListener('keydown', function(event) {
       } else {
         if(field.gameOver)  {
         game.set(1250, flowFunc);
+        field.gameOver = false;
         field.initCells();
         field.render();
+        field.newFigure(new Figure(), {x: 5, y: 0});
+        nextFigure = new Figure() // код повторяется
+        nextFigure.setHorizontal();
+        nextFigureField.initCells();
+        nextFigureField.newFigure(nextFigure, scoreBoardCoordsForFigure(nextFigure));
+        nextFigureField.render();
+        game.score = 0;
         }
         game.start();
       } 
@@ -168,7 +176,9 @@ window.addEventListener('keydown', function(event) {
 
 /*
  Сделать:
-  - нормальный сброс игры при геймовере
+  - нормальный сброс игры при геймовере ***done***
+  - ускорение игры
+  - нормальный зачет очков
  Ошибки:
   - перед отображением геймовера новая фигура не должна появляться
   - когда убирается несколько рядов - внизу остается белый ряд

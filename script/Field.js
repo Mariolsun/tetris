@@ -97,10 +97,10 @@ class Field {
     this.figure.cells.forEach(cell => {
       cell.x = coord.x + cell.x; //запись в координаты фигуры координат поля
       cell.y = coord.y + cell.y;
-      if(!!this.cells[cell.x][cell.y] && cell.y >= 0 && !this.cells[cell.x][cell.y].isEmpty) {
+      console.log(`new figure ${this.figure.type} cell ${cell.x} ${cell.y}`);
+      if(!!this.cells[cell.x][cell.y] && !this.cells[cell.x][cell.y].isEmpty) {
         this.gameOver = true;
-      }
-      this.occupyCell(cell.x, cell.y, figure.color);
+      } else this.occupyCell(cell.x, cell.y, figure.color);
     })
   }
 
