@@ -20,19 +20,19 @@ function scoreBoardCoordsForFigure(figure) {
   let nextFigureCoords = {};
   switch(figure.type) {
     case 'I':
-      nextFigureCoords = {x: 2, y: 1};
+      nextFigureCoords = {x: 1, y: 1};
       break;
     case 'J':
     case 'T':
     case 'Z':
-      nextFigureCoords = {x: 3, y: 1};
+      nextFigureCoords = {x: 1, y: 1};
       break;
     case 'L':
     case 'S':
-      nextFigureCoords = {x: 2, y: 1};
+      nextFigureCoords = {x: 1, y: 1};
       break;
     case 'O':
-      nextFigureCoords = {x: 3, y: 2};
+      nextFigureCoords = {x: 2, y: 1};
       break;
   }
   return nextFigureCoords;
@@ -66,7 +66,7 @@ figure = new Figure();
 field = new Field(gameCanvas);
 field.newFigure(figure, {x: 5, y: 0});
 
-nextFigureField = new Field(nextFigureCanvas, 3, 6);
+nextFigureField = new Field(nextFigureCanvas, 2, 4);
 backField = new BackField(backCanvas);
 
 backField.rowsAm = 40; // костыль, нужно причесать класс field и его потомков 
@@ -79,7 +79,7 @@ backField.initCells();
 backField.render();
 
 let  nextFigure = new Figure()
-nextFigure.setScoreBoardPosition();
+nextFigure.setHorizontal();
 
 
     nextFigureField.newFigure(nextFigure, scoreBoardCoordsForFigure(nextFigure));
@@ -96,9 +96,8 @@ const flowFunc = function() {
     
     transferRows(field, backField);
     field.deleteRows();
-    field.newFigure(new Figure(nextFigure.type, nextFigure.color), {x: 5, y: -2});
+    field.newFigure(new Figure(nextFigure.type, nextFigure.color), {x: 5, y: 0});
     nextFigure = new Figure()
-    nextFigure.setScoreBoardPosition();
     nextFigureField.initCells();
     nextFigureField.newFigure(nextFigure, scoreBoardCoordsForFigure(nextFigure));
     nextFigureField.render();
@@ -106,7 +105,7 @@ const flowFunc = function() {
 
     if(field.gameOver) {
       console.log('game over!');
-      game.pause();
+      game.gameOver();
    //   gameFlow.isRunning = false;
     }
   }
@@ -144,9 +143,14 @@ window.addEventListener('keydown', function(event) {
   if(event.key === 'Enter') {
       if(game.isRunning) {
         game.pause();
-      } else  {
+      } else {
+        if(field.gameOver)  {
+        game.set(1250, flowFunc);
+        field.initCells();
+        field.render();
+        }
         game.start();
-      }
+      } 
     }
 
 //  console.log(`keydown, test variable: ${test}`)
@@ -172,11 +176,10 @@ console.log(`end of index.js`)
 
 /*
  Сделать:
-  - отрисовку следующей фигуры ***done***
-  - отрисовку надписи game over
   - нормальный сброс игры при геймовере
  Ошибки:
-  - когда убирается несколько рядов - внизу остается белый ряд (проблема именно с самым нижним рядом);
+  - перед отображением геймовера новая фигура не должна появляться
+  - когда убирается несколько рядов - внизу остается белый ряд
   - отступ поля сверху постоянен при изменении размеров окна
-  - логику геймовера надо переписать (посмотреть как в настоящем тетрисе появляется новая фигура)
+  - логику геймовера надо переписать (и посмотреть как в настоящем тетрисе появляется новая фигура)
   */

@@ -4,6 +4,7 @@ class Figure  {
     this.setFigure(this.type);
     this.color = !!color? color : this.getRandomColor();
     this.vector = 0;
+    this.setHorizontal();
  //   console.log(`new Figure: ${this.color}, ${this.type}, vector: ${this.vector}`);
  //   this.ctx = canvas.getContext('2d');
   //  this.relCoord
@@ -396,14 +397,15 @@ class Figure  {
     return new Figure(type, vector);
   }
 
-  setScoreBoardPosition() {
+  setHorizontal() {
     let toVector = 0;
     switch(this.type) {
       case 'I':
-      case 'Z':
-      case 'S':
-      case 'T':
+      case 'L':
         toVector = 1;
+        break;
+      case 'J':
+        toVector = 3;
         break;
     }
     
@@ -412,7 +414,6 @@ class Figure  {
       this.cells = this.rotate();
       this.vector = this.getNewVector();
     }
-    console.log(`set`);
   }
 }
 
