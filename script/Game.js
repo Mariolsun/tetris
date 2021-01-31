@@ -20,12 +20,12 @@ class Game {
     this._nextFigure = newFigure;
   }
 
-  constructor(scoreElem, nextFigureElem, pauseBannerElem) {
+  constructor(scoreElem, nextFigureElem, pauseBanner) {
     this._score = 0;
     this._nextFigure = 'G';
     this.scoreElem = scoreElem;
     this.nextFigureElem = nextFigureElem;
-    this.pauseBannerElem = pauseBannerElem;
+    this.pauseBanner = pauseBanner;
     this.tick = 1000;
     this.isRunning = false;
 
@@ -50,23 +50,28 @@ class Game {
   }
 
   set(tick, flowFunc) {
+    this.pauseBanner.newGame();
     this.tick = tick;
     this.flowFunc = flowFunc; 
   }
 
   start() {
     this.flow = setInterval(this.flowFunc, this.tick);
-    this.pauseBannerElem.style.visibility = 'hidden';
+    this.pauseBanner.pause(false);
     this.isRunning = true;
   }
 
   pause() {
     clearInterval(this.flow);
-    this.pauseBannerElem.style.visibility = 'visible';
+    this.pauseBanner.pause(true);
     this.isRunning = false;
   }
 
-  
+  gameOver()  {
+    clearInterval(this.flow);
+    this.pauseBanner.gameOver();
+    this.isRunning = false;
+  }
 
 
 

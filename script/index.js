@@ -7,6 +7,7 @@ const backCanvas = document.getElementById('backGround');
 const nextFigureElem = document.querySelector('.scoreBoard__nextFigure');
 const scoreElem = document.querySelector('.scoreBoard__score');
 const pauseBannerElem = document.querySelector('.pause-banner');
+const pauseBannerText = pauseBannerElem.querySelector('.pause-banner__text');
 
 function resizeCanvas(canvas, canvasObj) {
   canvas.width = window.innerWidth;
@@ -15,6 +16,27 @@ function resizeCanvas(canvas, canvasObj) {
   console.log(`resized canvas`);
 }
 
+function scoreBoardCoordsForFigure(figure) {
+  let nextFigureCoords = {};
+  switch(figure.type) {
+    case 'I':
+      nextFigureCoords = {x: 2, y: 1};
+      break;
+    case 'J':
+    case 'T':
+    case 'Z':
+      nextFigureCoords = {x: 3, y: 1};
+      break;
+    case 'L':
+    case 'S':
+      nextFigureCoords = {x: 2, y: 1};
+      break;
+    case 'O':
+      nextFigureCoords = {x: 3, y: 2};
+      break;
+  }
+  return nextFigureCoords;
+}
 
 
 
@@ -37,7 +59,8 @@ function transferRows(field, backField) {
   }
 }
 
-let game = new Game(scoreElem, nextFigureElem, pauseBannerElem);
+let pauseBanner = new PauseBanner(pauseBannerElem, pauseBannerText);
+let game = new Game(scoreElem, nextFigureElem, pauseBanner);
 
 figure = new Figure();
 field = new Field(gameCanvas);
@@ -57,27 +80,7 @@ backField.render();
 
 let  nextFigure = new Figure()
 nextFigure.setScoreBoardPosition();
-function scoreBoardCoordsForFigure(figure) {
-  let nextFigureCoords = {};
-  switch(figure.type) {
-    case 'I':
-      nextFigureCoords = {x: 2, y: 1};
-      break;
-    case 'J':
-    case 'T':
-    case 'Z':
-      nextFigureCoords = {x: 3, y: 1};
-      break;
-    case 'L':
-    case 'S':
-      nextFigureCoords = {x: 2, y: 1};
-      break;
-    case 'O':
-      nextFigureCoords = {x: 3, y: 2};
-      break;
-  }
-  return nextFigureCoords;
-}
+
 
     nextFigureField.newFigure(nextFigure, scoreBoardCoordsForFigure(nextFigure));
     nextFigureField.render();
