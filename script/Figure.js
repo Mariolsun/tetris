@@ -5,6 +5,7 @@ class Figure  {
     this.color = !!color? color : this.getRandomColor();
     this.vector = 0;
     this.setHorizontal();
+    console.log(`new ${this.type} figure set cells ${JSON.stringify(this.cells)}`);
 
   }
 

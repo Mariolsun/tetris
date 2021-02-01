@@ -52,6 +52,7 @@ class Field {
 
 
   renderCell(c,r,color) {
+  //  console.log(`rendering cell ${c} ${r} ${color}`);
     let res = this.convertCoord(c, r);
     let x = res.x;
     let y = res.y;
@@ -60,6 +61,7 @@ class Field {
   }
 
   occupyCell (x, y, color = 'grey') {
+    console.log(`occyping cell ${x} ${y} ${color}`);
     this.renderCell(x, y, color);
     if (x<this.columnsAm && y<this.rowsAm && this.cells[x][y]) {
       this.cells[x][y].isEmpty = false;
@@ -97,11 +99,11 @@ class Field {
     this.figure.cells.forEach(cell => {
       cell.x = coord.x + cell.x; //запись в координаты фигуры координат поля
       cell.y = coord.y + cell.y;
-      console.log(`new figure ${this.figure.type} cell ${cell.x} ${cell.y}`);
       if(!!this.cells[cell.x][cell.y] && !this.cells[cell.x][cell.y].isEmpty) {
         this.gameOver = true;
       } else this.occupyCell(cell.x, cell.y, figure.color);
     })
+    console.log(`figure ${this.figure.type} added to the field, cells ${JSON.stringify(this.figure.cells)}`)
   }
 
 
@@ -238,6 +240,8 @@ getWholeRows() {
 }
 
 dropUpperRows(row, k) {
+//  console.log(`dropping rows ${row} ${k}`);
+
   let isEmptyRow = false;
   
   let j = 1;
@@ -249,27 +253,39 @@ dropUpperRows(row, k) {
           this.moveCell(i, row - j, i, row-j+k);
       }
     }
+ //   console.log(`\n\n\n\n\n\n\n`);
     j++;
   }
+//  console.log(`dropped down ${j} rows starting with ${row}`);
+  
  
 }
 
 deleteRows() {
 
   let rows = this.getWholeRows();
-  
+ // console.log(`\n\n\n\n\n\n\n`);
  
-  
+ // console.log(`deleteting ${rows.length}`);
   
   if(rows.length !== 0) {
     rows.forEach(row => {
       for(let i=0; i < this.columnsAm; i++) {
-       
+    /*    function sleep(milliseconds) {
+          const date = Date.now();
+          let currentDate = null;
+          do {
+            currentDate = Date.now();
+          } while (currentDate - date < milliseconds);
+        }
+        sleep(1000); */
         this.clearCell(i, row);
       }
     });
     this.dropUpperRows(Math.min(...rows), rows.length);
     }
+  //  console.log(`deleted`);
+ //   console.log(`\n\n\n\n\n\n\n`);
 }
 
 

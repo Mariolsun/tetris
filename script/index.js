@@ -1,7 +1,4 @@
 const gameCanvas = document.getElementById('tetris');
-//ctx = gameCanvas.getContext('2d');
-//let texture = new Image();
-//texture.src = './textures/texture.jpg';
 const nextFigureCanvas = document.getElementById('nextFigure');
 const backCanvas = document.getElementById('backGround');
 const nextFigureElem = document.querySelector('.scoreBoard__nextFigure');
@@ -40,13 +37,6 @@ function scoreBoardCoordsForFigure(figure) {
 
 
 
-/*
-resizeCanvas(backCanvas, backField);
-window.addEventListener('resize', () => {
-  resizeCanvas(backCanvas, backField);
-}) 
-*/
-
 
 function transferRows(field, backField) {
   let rowsToDelete = field.getWholeRows();
@@ -63,7 +53,9 @@ let game = new Game(scoreElem, pauseBanner);
 
 field = new Field(gameCanvas);
 field.newFigure(new Figure(), {x: 5, y: 0});
-
+for(let i = 0; i < field.columnsAm; i++) {
+  field.renderCell(i, 19, 'pink');
+}
 nextFigureField = new Field(nextFigureCanvas, 2, 4);
 backField = new BackField(backCanvas);
 
@@ -82,6 +74,9 @@ nextFigureField.render();
 
 
 const flowFunc = function() {
+  for(let i = 0; i < field.columnsAm; i++) {
+    field.renderCell(i, 1, 'black');
+  }
   if (field.isFigureFin()) {
 
     let wholeRows = field.getWholeRows();
@@ -179,7 +174,6 @@ window.addEventListener('keydown', function(event) {
   - нормальный сброс игры при геймовере ***done***
   - ускорение игры
   - нормальный зачет очков
-  - нормальное отображение на гитхаб
  Ошибки:
   - перед отображением геймовера новая фигура не должна появляться
   - когда убирается несколько рядов - внизу остается белый ряд
