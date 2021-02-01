@@ -52,7 +52,7 @@ class Field {
 
 
   renderCell(c,r,color) {
-  //  console.log(`rendering cell ${c} ${r} ${color}`);
+    console.log(`rendering cell ${c} ${r} ${color}`);
     let res = this.convertCoord(c, r);
     let x = res.x;
     let y = res.y;

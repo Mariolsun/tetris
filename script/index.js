@@ -74,9 +74,10 @@ nextFigureField.render();
 
 
 const flowFunc = function() {
-  for(let i = 0; i < field.columnsAm; i++) {
+  field.moveFigure('down');
+/*  for(let i = 0; i < field.columnsAm; i++) {
     field.renderCell(i, 1, 'black');
-  }
+  } */
   if (field.isFigureFin()) {
 
     let wholeRows = field.getWholeRows();
@@ -98,7 +99,6 @@ const flowFunc = function() {
     }
   }
   
-  field.moveFigure('down');
 }
 
 
