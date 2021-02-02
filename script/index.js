@@ -34,6 +34,24 @@ function scoreBoardCoordsForFigure(figure) {
   return nextFigureCoords;
 }
 
+function resetGame(tick, flowFunc) {
+    this.pauseBanner.newGame();
+    this.tick = tick;
+    this.flowFunc = flowFunc;
+    field.gameOver = false;
+    field.initCells();
+    field.render();
+    field.newFigure(new Figure(), {x: 5, y: 0});
+    nextFigure = new Figure() // код повторяется
+    nextFigure.setHorizontal();
+    nextFigureField.initCells();
+    nextFigureField.newFigure(nextFigure, scoreBoardCoordsForFigure(nextFigure));
+    nextFigureField.render();
+    backField.initCells();
+    backField.render();
+    game.score = 0;
+}
+
 
 
 
@@ -50,12 +68,10 @@ function transferRows(field, backField) {
 
 let pauseBanner = new PauseBanner(pauseBannerElem, pauseBannerText);
 let game = new Game(scoreElem, pauseBanner);
-
+game.onReset(resetGame);
 field = new Field(gameCanvas);
 field.newFigure(new Figure(), {x: 5, y: 0});
-for(let i = 0; i < field.columnsAm; i++) {
-  field.renderCell(i, 19, 'pink');
-}
+
 nextFigureField = new Field(nextFigureCanvas, 2, 4);
 backField = new BackField(backCanvas);
 
@@ -105,7 +121,7 @@ const flowFunc = function() {
 
 
 
-game.set(1250, flowFunc);
+game.reset(1250, flowFunc);
 
 
 window.addEventListener('keydown', function(event) {
@@ -136,17 +152,7 @@ window.addEventListener('keydown', function(event) {
         game.pause();
       } else {
         if(field.gameOver)  {
-        game.set(1250, flowFunc);
-        field.gameOver = false;
-        field.initCells();
-        field.render();
-        field.newFigure(new Figure(), {x: 5, y: 0});
-        nextFigure = new Figure() // код повторяется
-        nextFigure.setHorizontal();
-        nextFigureField.initCells();
-        nextFigureField.newFigure(nextFigure, scoreBoardCoordsForFigure(nextFigure));
-        nextFigureField.render();
-        game.score = 0;
+          game.reset(1250, flowFunc);
         }
         game.start();
       } 

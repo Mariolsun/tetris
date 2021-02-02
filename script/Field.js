@@ -52,7 +52,7 @@ class Field {
 
 
   renderCell(c,r,color) {
-    console.log(`rendering cell ${c} ${r} ${color}`);
+  //  console.log(`rendering cell ${c} ${r} ${color}`);
     let res = this.convertCoord(c, r);
     let x = res.x;
     let y = res.y;
@@ -61,7 +61,7 @@ class Field {
   }
 
   occupyCell (x, y, color = 'grey') {
-    console.log(`occyping cell ${x} ${y} ${color}`);
+    //console.log(`occyping cell ${x} ${y} ${color}`);
     this.renderCell(x, y, color);
     if (x<this.columnsAm && y<this.rowsAm && this.cells[x][y]) {
       this.cells[x][y].isEmpty = false;
@@ -225,6 +225,13 @@ getRowCells(row) {
   return cells;
 }
 
+isEmptyRow(row) {
+  for(let i = 0; i < this.columnsAm; i++) {
+    if (!this.cells[i][row].isEmpty) return false;
+  }
+  return true;
+}
+
 getWholeRows() {
  
   let rows = [];
@@ -239,10 +246,17 @@ getWholeRows() {
   return rows;
 }
 
-dropUpperRows(row, k) {
+dropUpperRows(rows) {
+
+for(let i = this.rowsAm; i >= 0; ) {
+  let isEmptyRow = false
+}
+
+
+
 //  console.log(`dropping rows ${row} ${k}`);
 
-  let isEmptyRow = false;
+ /* let isEmptyRow = false;
   
   let j = 1;
   while(!isEmptyRow && j < this.rowsAm) {
@@ -254,7 +268,7 @@ dropUpperRows(row, k) {
       }
     }
  //   console.log(`\n\n\n\n\n\n\n`);
-    j++;
+    j++; */
   }
 //  console.log(`dropped down ${j} rows starting with ${row}`);
   
@@ -266,7 +280,7 @@ deleteRows() {
   let rows = this.getWholeRows();
  // console.log(`\n\n\n\n\n\n\n`);
  
- // console.log(`deleteting ${rows.length}`);
+ console.log(`deleting ${JSON.stringify(rows)}`);
   
   if(rows.length !== 0) {
     rows.forEach(row => {
@@ -282,7 +296,7 @@ deleteRows() {
         this.clearCell(i, row);
       }
     });
-    this.dropUpperRows(Math.min(...rows), rows.length);
+    this.dropUpperRows(rows);
     }
   //  console.log(`deleted`);
  //   console.log(`\n\n\n\n\n\n\n`);

@@ -39,15 +39,15 @@ class Game {
     this.start = fn;
   }
 
-  onEnd(fn) {
-    this.end = fn;
-  }
-
   onPause(fn) {
     this.pause = fn;
   }
 
-  set(tick, flowFunc) {
+  onReset(fn) {
+    this.reset = fn;
+  }
+
+  reset(tick, flowFunc) {
     this.pauseBanner.newGame();
     this.tick = tick;
     this.flowFunc = flowFunc; 
