@@ -248,8 +248,12 @@ getWholeRows() {
 
 dropUpperRows(rows) {
 
-for(let i = this.rowsAm; i >= 0; ) {
-  let isEmptyRow = false
+for(let i = this.rowsAm; i >= 0; i--) {
+  if(this.isEmptyRow(i)) {
+    for(let k = 0; k < this.columnsAm; l++) {
+      this.moveCell(i + 1, row - j, i, row-j+k);
+    
+  }
 }
 
 
