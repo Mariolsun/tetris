@@ -103,7 +103,7 @@ class Field {
         this.gameOver = true;
       } else this.occupyCell(cell.x, cell.y, figure.color);
     })
-    console.log(`figure ${this.figure.type} added to the field, cells ${JSON.stringify(this.figure.cells)}`)
+ //   console.log(`figure ${this.figure.type} added to the field, cells ${JSON.stringify(this.figure.cells)}`)
   }
 
 
@@ -226,8 +226,12 @@ getRowCells(row) {
 }
 
 isEmptyRow(row) {
+  console.log(`checking if ${row}th row is empty`);
   for(let i = 0; i < this.columnsAm; i++) {
-    if (!this.cells[i][row].isEmpty) return false;
+    if (!this.cells[i][row].isEmpty) {
+      console.log('not empty')
+      return false;
+    }
   }
   return true;
 }
@@ -247,13 +251,18 @@ getWholeRows() {
 }
 
 dropUpperRows(rows) {
-
-for(let i = this.rowsAm; i >= 0; i--) {
-  if(this.isEmptyRow(i)) {
-    for(let k = 0; k < this.columnsAm; l++) {
-      this.moveCell(i + 1, row - j, i, row-j+k);
-    
-  }
+  console.log(`dropping ${rows.length} rows`);
+  rows.forEach((row) => {
+    console.log(`dropping rows above ${row}`);
+    for(let j = row - 1; j >= 0; j--) {
+      console.log(`dropping row ${j}`);
+      for(let k = 0; k < this.columnsAm; k++) {
+        if(!this.cells[k][j].isEmpty) this.moveCell(k, j, k, j + 1);
+        console.log(`moving cell ${k} ${j}`);
+      }
+    }
+  })
+  console.log(`rows dropped ${this.getWholeRows()}`);
 }
 
 
@@ -273,11 +282,9 @@ for(let i = this.rowsAm; i >= 0; i--) {
     }
  //   console.log(`\n\n\n\n\n\n\n`);
     j++; */
-  }
-//  console.log(`dropped down ${j} rows starting with ${row}`);
   
- 
-}
+//  console.log(`dropped down ${j} rows starting with ${row}`);
+
 
 deleteRows() {
 

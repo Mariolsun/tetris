@@ -102,6 +102,7 @@ const flowFunc = function() {
     } else game.score +=100;
     
     transferRows(field, backField);
+    console.log(`transfered rows`);
     field.deleteRows();
     field.newFigure(new Figure(nextFigure.type, nextFigure.color), {x: 5, y: 0});
     nextFigure = new Figure();
