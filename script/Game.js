@@ -23,6 +23,7 @@ class Game {
   constructor(scoreElem, pauseBanner) {
     this._score = 0;
     this._nextFigure = 'G';
+    this._tickCount = 0;
     this.scoreElem = scoreElem;
     this.pauseBanner = pauseBanner;
     this.tick = 1000;
@@ -71,7 +72,16 @@ class Game {
     this.isRunning = false;
   }
 
-
+  updateTick() {
+    this._tickCount += 1;
+    if(this.tick > 200 && this._tickCount > 100) {
+      this.tick *= 0.8;
+      this._tickCount = 0;
+      clearInterval(this.flow);
+      this.flow = setInterval(this.flowFunc, this.tick);
+    }
+    console.log(`tick updated ${this.tick} ${this._tickCount}`);
+  }
 
   
 

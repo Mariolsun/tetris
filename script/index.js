@@ -118,7 +118,7 @@ const flowFunc = function() {
   }
   
   field.moveFigure('down');
-  
+  game.updateTick();
 }
 
 
