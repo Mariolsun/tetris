@@ -9,3 +9,10 @@
     color: black;
     text-align: center;
 }
+
+/*
+@media screen and (max-width: 1028px) {
+    .pause-banner__text {
+        margin-top: 40vw;
+    }
+}*/

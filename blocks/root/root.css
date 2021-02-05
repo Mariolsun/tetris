@@ -1,6 +1,5 @@
 .root {
-    width: 1360px;
-    height: 1020px;
+
     max-height: 100vw;
     
 }
@@ -12,5 +11,12 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 150px;
+}
+
+
+@media screen and (orientation: portrait) {
+    .main {
+        flex-direction: column;
+    }
+    
 }

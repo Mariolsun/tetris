@@ -9,3 +9,14 @@
     align-content: center;
     justify-content: center;
 }
+
+@media screen and (orientation: portrait) {
+    .field {
+        max-width: 40vh;
+        max-height: 80vh;
+        box-shadow: none;
+        border: 1px solid black;
+        border-top: none;
+    }
+    
+}

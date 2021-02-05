@@ -12,6 +12,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+    height: 100vh;
     overflow-y: hidden;
+}
+
+@media screen and (orientation: portrait) {
+    body {
+        align-items: flex-start;
+    }
+    
 }
