@@ -90,7 +90,9 @@ nextFigureField.render();
 
 
 const flowFunc = function() {
-  field.moveFigure('down');
+  if(field.gameOver) {
+    game.gameOver();
+  }
 /*  for(let i = 0; i < field.columnsAm; i++) {
     field.renderCell(i, 1, 'black');
   } */
@@ -105,16 +107,17 @@ const flowFunc = function() {
     console.log(`transfered rows`);
     field.deleteRows();
     field.newFigure(new Figure(nextFigure.type, nextFigure.color), {x: 5, y: 0});
+    if(field.gameOver) {
+      game.gameOver();
+    }
     nextFigure = new Figure();
     nextFigureField.initCells();
     nextFigureField.newFigure(nextFigure, scoreBoardCoordsForFigure(nextFigure));
     nextFigureField.render();
  
-
-    if(field.gameOver) {
-      game.gameOver();
-    }
   }
+  
+  field.moveFigure('down');
   
 }
 
