@@ -106,6 +106,24 @@ class Field {
  //   console.log(`figure ${this.figure.type} added to the field, cells ${JSON.stringify(this.figure.cells)}`)
   }
 
+  getFigureRealCoords() {
+    let xMin = this.columnsAm - 1;
+    let xMax = 0;
+    let yMin = this.rowsAm - 1;
+    let yMax = 0;
+
+    this.figure.cells.forEach(cell => {
+      xMin = xMin > cell.x ? cell.x : xMin;
+      xMax = xMax < cell.x ? cell.x : xMax;
+      yMin = yMin > cell.y ? cell.y : yMin;
+      yMax = yMax < cell.y ? cell.y : yMax;
+    })
+
+    let min = this.convertCoord(xMin, yMin);
+    let max = this.convertCoord(xMax, yMax);
+
+    return {min, max};
+  }
 
   positionsDiff(oldCells, newCells) {
     let cellsToRemove = [];

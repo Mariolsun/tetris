@@ -41,7 +41,7 @@ function resetGame(tick, flowFunc) {
     field.gameOver = false;
     field.initCells();
     field.render();
-    field.newFigure(new Figure(), {x: 5, y: 0});
+    field.newFigure(new Figure(), {x: 5, y: 3});
     nextFigure = new Figure() // код повторяется
     nextFigure.setHorizontal();
     nextFigureField.initCells();
@@ -70,7 +70,7 @@ let pauseBanner = new PauseBanner(pauseBannerElem, pauseBannerText);
 let game = new Game(scoreElem, pauseBanner);
 game.onReset(resetGame);
 field = new Field(gameCanvas);
-field.newFigure(new Figure(), {x: 5, y: 0});
+field.newFigure(new Figure(), {x: 5, y: 3});
 
 nextFigureField = new Field(nextFigureCanvas, 2, 4);
 backField = new BackField(backCanvas);
@@ -106,7 +106,7 @@ const flowFunc = function() {
     transferRows(field, backField);
     console.log(`transfered rows`);
     field.deleteRows();
-    field.newFigure(new Figure(nextFigure.type, nextFigure.color), {x: 5, y: 0});
+    field.newFigure(new Figure(nextFigure.type, nextFigure.color), {x: 5, y: 3});
     if(field.gameOver) {
       game.gameOver();
     }
@@ -118,7 +118,7 @@ const flowFunc = function() {
   }
   
   field.moveFigure('down');
-  game.updateTick();
+ // game.updateTick();
 }
 
 
@@ -128,55 +128,93 @@ const flowFunc = function() {
 game.reset(1250, flowFunc);
 
 
-window.addEventListener('keydown', function(event) {
-  let action;
-  if(game.isRunning) {
-
-    switch(event.key) {
-      case 'ArrowDown':
-        action = 'down'
-        break;
-      case 'ArrowLeft':
-        action = 'left';
-        break;
-      case 'ArrowRight':
-        action = 'right';
-        break;
-      case 'ArrowUp':
-        action = 'rotate';
-        break;
-      case ' ':
-        action = 'drop';
-        break;
+function mobileGameTouchhandler(event) {
+    event.preventDefault();
+    let figureCoords = field.getFigureRealCoords();
+    let action;
+    let canvasRect = gameCanvas.getBoundingClientRect();
+    let left = event.touches[0].pageX - canvasRect.left;
+    let top = event.touches[0].pageY - canvasRect.top;
+    console.log(JSON.stringify(figureCoords));
+    console.log(`x ${left} y ${top}`);
+    if(figureCoords.min.x - 50 < left && left < figureCoords.max.x + 50 && figureCoords.min.y - 50 < top && top < figureCoords.max.y + 50) {
+      action = 'rotate';
+    } else if(figureCoords.max.y  + 20 < top) {
+      console.log('down');
+      action = 'down';
+    } else if(figureCoords.min.x > left) {
+      action = 'left';
+    } else if(figureCoords.max.x < left) {
+      action = 'right';
     }
-  }
+    console.log(`event fired action: ${action}`);
+    field.moveFigure(action);
+}
 
-  if(event.key === 'Enter') {
+function mobileGameStartEvent () {
+ // game.start()
+  window.removeEventListener('touchstart', mobileGameStartEvent);
+  gameCanvas.addEventListener('touchstart', mobileGameTouchhandler)
+}
+
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  window.addEventListener('touchstart', function(event) {
+    game.start();
+    gameCanvas.addEventListener('touchstart', mobileGameTouchhandler);
+  });
+} else {
+  window.addEventListener('keydown', function(event) {
+    let action;
+    if(game.isRunning) {
+  
+      switch(event.key) {
+        case 'ArrowDown':
+          action = 'down'
+          break;
+        case 'ArrowLeft':
+          action = 'left';
+          break;
+        case 'ArrowRight':
+          action = 'right';
+          break;
+        case 'ArrowUp':
+          action = 'rotate';
+          break;
+        case ' ':
+          action = 'drop';
+          break;
+      }
+    }
+  
+    if(event.key === 'Enter') {
+        if(game.isRunning) {
+          game.pause();
+        } else {
+          if(field.gameOver)  {
+            game.reset(1250, flowFunc);
+          }
+          game.start();
+        } 
+      }
+  
+  
+    if(action === 'drop') {
+      event.preventDefault();
+      field.dropFigure();
+      game.flowFunc();
       if(game.isRunning) {
         game.pause();
-      } else {
-        if(field.gameOver)  {
-          game.reset(1250, flowFunc);
-        }
         game.start();
-      } 
-    }
-
-
-  if(action === 'drop') {
-    event.preventDefault();
-    field.dropFigure();
-    game.flowFunc();
-    if(game.isRunning) {
-      game.pause();
-      game.start();
-    }
-  } else {
-    if(action)  event.preventDefault();
-    field.moveFigure(action);
-  
+      }
+    } else {
+      if(action)  event.preventDefault();
+      field.moveFigure(action);
+    
+  }
+  })
 }
-})
+
+
 
 
 /*
