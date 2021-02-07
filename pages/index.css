@@ -16,20 +16,25 @@
 @import url(../blocks/mobile-buttons/__upNdownBtnsWrapper/mobile-buttons__upNdownBtnsWrapper.css);
 @import url(../blocks/display/display.css);
 
+html {
+    margin: 0;
+}
 
 body {
-    margin: auto;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
     overflow: hidden;
-    margin: 50px 0;
+    height: 100%;
+    width: 100%;
+    margin: 0;
 }
 
 @media screen and (orientation: portrait) {
     body {
-        align-items: flex-start;
+        align-items: center;
+        justify-content: center;
     }
     
 }
