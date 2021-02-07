@@ -23,7 +23,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 @media screen and (orientation: portrait) {
