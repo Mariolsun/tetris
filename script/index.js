@@ -61,7 +61,7 @@ function resetGame(tick, flowFunc) {
 
 (function init100vh(){
   function setHeight() {
-    var vh = document.documentElement.clientHeight * 0.01;
+    var vh = window.screen.height * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   }
   setHeight();
