@@ -18,12 +18,13 @@
 
 
 body {
-    margin: 0;
+    margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     overflow: hidden;
+    margin: 50px 0;
 }
 
 @media screen and (orientation: portrait) {
