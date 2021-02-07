@@ -5,6 +5,13 @@ const nextFigureElem = document.querySelector('.scoreBoard__nextFigure');
 const scoreElem = document.querySelector('.scoreBoard__score');
 const pauseBannerElem = document.querySelector('.pause-banner');
 const pauseBannerText = pauseBannerElem.querySelector('.pause-banner__text');
+const mobileBtnLeft = document.querySelector('.mobile-buttons__button_type_left')
+const mobileBtnUp = document.querySelector('.mobile-buttons__button_type_up');
+const mobileBtnDown = document.querySelector('.mobile-buttons__button_type_down');
+const mobileBtnRight = document.querySelector('.mobile-buttons__button_type_right');
+const mobileBtnDrop = document.querySelector('.mobile-buttons__button_type_drop');
+const mobileBtnPause = document.querySelector('.mobile-buttons__button_type_pause');
+
 
 function resizeCanvas(canvas, canvasObj) {
   canvas.width = window.innerWidth;
@@ -41,7 +48,7 @@ function resetGame(tick, flowFunc) {
     field.gameOver = false;
     field.initCells();
     field.render();
-    field.newFigure(new Figure(), {x: 5, y: 3});
+    field.newFigure(new Figure(), {x: 5, y: 0});
     nextFigure = new Figure() // код повторяется
     nextFigure.setHorizontal();
     nextFigureField.initCells();
@@ -70,7 +77,7 @@ let pauseBanner = new PauseBanner(pauseBannerElem, pauseBannerText);
 let game = new Game(scoreElem, pauseBanner);
 game.onReset(resetGame);
 field = new Field(gameCanvas);
-field.newFigure(new Figure(), {x: 5, y: 3});
+field.newFigure(new Figure(), {x: 5, y: 0});
 
 nextFigureField = new Field(nextFigureCanvas, 2, 4);
 backField = new BackField(backCanvas);
@@ -106,7 +113,7 @@ const flowFunc = function() {
     transferRows(field, backField);
     console.log(`transfered rows`);
     field.deleteRows();
-    field.newFigure(new Figure(nextFigure.type, nextFigure.color), {x: 5, y: 3});
+    field.newFigure(new Figure(nextFigure.type, nextFigure.color), {x: 5, y: 0});
     if(field.gameOver) {
       game.gameOver();
     }
@@ -128,7 +135,7 @@ const flowFunc = function() {
 game.reset(1250, flowFunc);
 
 
-function mobileGameTouchhandler(event) {
+/*function mobileGameTouchhandler(event) {
     event.preventDefault();
     let figureCoords = field.getFigureRealCoords();
     let action;
@@ -155,14 +162,41 @@ function mobileGameStartEvent () {
  // game.start()
   window.removeEventListener('touchend', mobileGameStartEvent);
   gameCanvas.addEventListener('touchend', mobileGameTouchhandler)
-}
+} */
 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-  window.addEventListener('touchend', function(event) {
+  pauseBannerElem.style.display = 'none';
+  mobileBtnDown.addEventListener('touchstart', function(event) {
     event.preventDefault();
-    game.start();
-    gameCanvas.addEventListener('touchend', mobileGameTouchhandler);
-  });
+    field.moveFigure('down');
+  })
+  mobileBtnUp.addEventListener('touchend', function(event) {
+    event.preventDefault();
+    field.moveFigure('rotate');
+  })
+  mobileBtnLeft.addEventListener('touchend', function(event) {
+    event.preventDefault();
+    field.moveFigure('left');
+  })
+  mobileBtnRight.addEventListener('touchend', function(event) {
+    event.preventDefault();
+    field.moveFigure('right');
+  })
+  mobileBtnDrop.addEventListener('touchend', function(event) {
+    event.preventDefault();
+      field.dropFigure();
+      game.flowFunc();
+  })
+  mobileBtnPause.addEventListener('touchend', function(event) {
+    if(game.isRunning) {
+      game.pause();
+    } else {
+      if(field.gameOver)  {
+        game.reset(1250, flowFunc);
+      }
+      game.start();
+    }
+  })
 } else {
   window.addEventListener('keydown', function(event) {
     let action;
@@ -220,12 +254,6 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 
 /*
  Сделать:
-  - нормальный сброс игры при геймовере ***done***
-  - ускорение игры
-  - нормальный зачет очков
+ - скрытие/показ элементов путем классов css
  Ошибки:
-  - перед отображением геймовера новая фигура не должна появляться
-  - когда убирается несколько рядов - внизу остается белый ряд
-  - отступ поля сверху постоянен при изменении размеров окна
-  - логику геймовера надо переписать (и посмотреть как в настоящем тетрисе появляется новая фигура)
-  */
+ */
