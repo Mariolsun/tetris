@@ -1,7 +1,8 @@
 
 
 class Field {
-  constructor(canvas, rowsAm = 20, columnsAm = 10) {
+  constructor(canvas, game, rowsAm = 20, columnsAm = 10) {
+    this.game = game;
     this.rowsAm = rowsAm;
     this.columnsAm = columnsAm;
     this.canvas = canvas;
@@ -161,46 +162,46 @@ class Field {
   }
 
   moveFigure(direction) {
-    let newPosition = this.figure.getNewPosition(direction);
-    
-    if(field.checkCollide(newPosition)) {
-  
+    if(this.game.isRunning) {
+      let newPosition = this.figure.getNewPosition(direction);
+      
+      if(field.checkCollide(newPosition)) {
+        if(direction === 'rotate') {
+          this.figure.vector = this.figure.getNewVector();
+        }
 
 
-    if(direction === 'rotate') {
-      this.figure.vector = this.figure.getNewVector();
+        let posDiff = this.positionsDiff(this.figure.cells, newPosition);
+
+        posDiff.cellsToRemove.forEach(cell => {
+          this.clearCell(cell.x, cell.y);
+        });
+
+        posDiff.cellsToAdd.forEach(cell => {
+          this.occupyCell(cell.x, cell.y, this.figure.color);
+        })
+
+        this.figure.cells.forEach((cell, i) => {
+          cell.x = newPosition[i].x;
+          cell.y = newPosition[i].y;
+        })
+      }
     }
-
-
-    let posDiff = this.positionsDiff(this.figure.cells, newPosition);
-
-    posDiff.cellsToRemove.forEach(cell => {
-      this.clearCell(cell.x, cell.y);
-    });
-
-    posDiff.cellsToAdd.forEach(cell => {
-      this.occupyCell(cell.x, cell.y, this.figure.color);
-    })
-
-    this.figure.cells.forEach((cell, i) => {
-      cell.x = newPosition[i].x;
-      cell.y = newPosition[i].y;
-    })
-  }
-  
 }
 
 dropFigure() {
-  let color = this.figure.color
-  this.figure.color = this.backgroundColor;
+  if(this.game.isRunning) {
+    let color = this.figure.color
+    this.figure.color = this.backgroundColor;
 
-  let newPosition = this.figure.getNewPosition('down');
-  while (field.checkCollide(newPosition)) {
-    field.moveFigure('down');
-    newPosition = this.figure.getNewPosition('down');
-  };
-  this.figure.color = color;
-  this.renderFigure();
+    let newPosition = this.figure.getNewPosition('down');
+    while (field.checkCollide(newPosition)) {
+      field.moveFigure('down');
+      newPosition = this.figure.getNewPosition('down');
+    };
+    this.figure.color = color;
+    this.renderFigure();
+  }
 }
 
 isFigureFin() {

@@ -76,7 +76,7 @@ function transferRows(field, backField) {
 let pauseBanner = new PauseBanner(pauseBannerElem, pauseBannerText);
 let game = new Game(scoreElem, pauseBanner);
 game.onReset(resetGame);
-field = new Field(gameCanvas);
+field = new Field(gameCanvas, game);
 field.newFigure(new Figure(), {x: 5, y: 0});
 
 nextFigureField = new Field(nextFigureCanvas, 2, 4);
@@ -190,11 +190,14 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
   mobileBtnPause.addEventListener('touchend', function(event) {
     if(game.isRunning) {
       game.pause();
+      console.log('pausing game on mobile');
     } else {
       if(field.gameOver)  {
+        console.log('resetting game on mobile');
         game.reset(1250, flowFunc);
       }
       game.start();
+      console.log('started game on mobile');
     }
   })
 } else {
