@@ -17,12 +17,12 @@
 
 @media screen and (orientation: portrait) {
     .scoreBoard {
-        margin-left: 0;
+        margin-left: 5vw;
         margin-top: 1vh;
-        max-width: 100%;
+        max-width: 10vw;
         width: auto;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: flex-end;
         align-items: center;
         max-height: 10vh;

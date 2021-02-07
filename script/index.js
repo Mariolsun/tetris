@@ -153,14 +153,15 @@ function mobileGameTouchhandler(event) {
 
 function mobileGameStartEvent () {
  // game.start()
-  window.removeEventListener('touchstart', mobileGameStartEvent);
-  gameCanvas.addEventListener('touchstart', mobileGameTouchhandler)
+  window.removeEventListener('touchend', mobileGameStartEvent);
+  gameCanvas.addEventListener('touchend', mobileGameTouchhandler)
 }
 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-  window.addEventListener('touchstart', function(event) {
+  window.addEventListener('touchend', function(event) {
+    event.preventDefault();
     game.start();
-    gameCanvas.addEventListener('touchstart', mobileGameTouchhandler);
+    gameCanvas.addEventListener('touchend', mobileGameTouchhandler);
   });
 } else {
   window.addEventListener('keydown', function(event) {

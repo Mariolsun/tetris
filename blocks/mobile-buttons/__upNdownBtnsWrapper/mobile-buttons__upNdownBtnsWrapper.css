@@ -1,0 +1,4 @@
+.mobile-buttons__upNdownBtnsWrapper {
+    display: flex;
+    flex-direction: column;
+}

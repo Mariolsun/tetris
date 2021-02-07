@@ -5,6 +5,16 @@
 @import url(../blocks/scoreBoard/__nextFigure/scoreBoard__nextFigure.css);
 @import url(../blocks/pause-banner/pause-banner.css);
 @import url(../blocks/pause-banner/__text/pause-banner__text.css);
+@import url(../blocks/mobile-buttons/mobile-buttons.css);
+@import url(../blocks/mobile-buttons/__button/mobile-buttons__button.css);
+@import url(../blocks/mobile-buttons/__button/_type/mobile-buttons__button_type_drop.css);
+@import url(../blocks/mobile-buttons/__button/_type/mobile-buttons__button_type_down.css);
+@import url(../blocks/mobile-buttons/__button/_type/mobile-buttons__button_type_left.css);
+@import url(../blocks/mobile-buttons/__button/_type/mobile-buttons__button_type_right.css);
+@import url(../blocks/mobile-buttons/__button/_type/mobile-buttons__button_type_up.css);
+@import url(../blocks/mobile-buttons/__moveControls/mobile-buttons__moveControls.css);
+@import url(../blocks/mobile-buttons/__upNdownBtnsWrapper/mobile-buttons__upNdownBtnsWrapper.css);
+@import url(../blocks/display/display.css);
 
 
 body {

@@ -1,0 +1,6 @@
+.mobile-buttons__moveControls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 50px;
+}

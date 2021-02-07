@@ -1,7 +1,6 @@
 .field {
     box-shadow: 3px 3px 20px 2px rgb(48, 48, 48);
-    max-width: 300px;
-    max-height: 600px;
+    
     background: white;
     border-top: none;
     display: flex;

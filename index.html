@@ -13,17 +13,31 @@
       обнови браузер
     </canvas>
     <div class="main">
-      <canvas id='tetris' class = 'field' width="340" height="680" style= 'position: relative;'>
-        обнови браузер
-      </canvas>
-      <div class="scoreBoard">
-        <div class="scoreBoard__score">
-          0
-        </div>
-
-        <canvas id='nextFigure' class="scoreBoard__nextFigure">
+      <div class="display">
+        <canvas id='tetris' class = 'field' width="340" height="680" style= 'position: relative;'>
           обнови браузер
         </canvas>
+        <div class="scoreBoard">
+          <div class="scoreBoard__score">
+            0
+          </div>
+
+          <canvas id='nextFigure' class="scoreBoard__nextFigure">
+            обнови браузер
+          </canvas>
+        </div>
+      </div>
+      <div class="mobile-buttons">
+        <div class="mobile-buttons__moveControls">
+          <button class="mobile-buttons__button mobile-buttons__button_type_left"><</button>
+          <div class="mobile-buttons__upNdownBtnsWrapper">
+            <button class="mobile-buttons__button mobile-buttons__button_type_up">^</button>
+            <button class="mobile-buttons__button mobile-buttons__button_type_down">v</button>
+          </div>
+          <button class="mobile-buttons__button mobile-buttons__button_type_right">></button>
+        </div>
+        <button class="mobile-buttons__button mobile-buttons__button_type_drop">drop</button>
+        <button class="mobile-buttons__button mobile-buttons__button_type_pause">P</button>
       </div>
       <div class="pause-banner">
         <p class="pause-banner__text">PAUSE</p>
