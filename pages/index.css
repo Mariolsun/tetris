@@ -29,6 +29,7 @@ body {
     height: 100%;
     width: 100%;
     margin: 0;
+    touch-action: manipulation;
 }
 
 @media screen and (orientation: portrait) {
