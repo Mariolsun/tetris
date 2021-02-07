@@ -11,7 +11,7 @@ const mobileBtnDown = document.querySelector('.mobile-buttons__button_type_down'
 const mobileBtnRight = document.querySelector('.mobile-buttons__button_type_right');
 const mobileBtnDrop = document.querySelector('.mobile-buttons__button_type_drop');
 const mobileBtnPause = document.querySelector('.mobile-buttons__button_type_pause');
-
+const mobileBtnsElem = document.querySelector('.mobile-buttons');
 
 function resizeCanvas(canvas, canvasObj) {
   canvas.width = window.innerWidth;
@@ -198,6 +198,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
     }
   })
 } else {
+  mobileBtnsElem.style.display = 'none';
   window.addEventListener('keydown', function(event) {
     let action;
     if(game.isRunning) {
