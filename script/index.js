@@ -13,11 +13,11 @@ const mobileBtnDrop = document.querySelector('.mobile-buttons__button_type_drop'
 const mobileBtnPause = document.querySelector('.mobile-buttons__button_type_pause');
 const mobileBtnsElem = document.querySelector('.mobile-buttons');
 
-function resizeCanvas(canvas, canvasObj) {
+/*function resizeCanvas(canvas, canvasObj) {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   canvasObj.render();
-}
+} */
 
 function scoreBoardCoordsForFigure(figure) {
   let nextFigureCoords = {};
