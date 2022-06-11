@@ -1,4 +1,7 @@
 .mobile-buttons__button {
     width: 13vw;
     height: 13vw;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
