@@ -6,12 +6,11 @@ class Field {
     this.rowsAm = rowsAm;
     this.columnsAm = columnsAm;
     this.canvas = canvas;
-    this.innerBorderWidth = 0;
+    this.innerBorderWidth = 1;
     this.backgroundColor = 'white';
  //   this.texture = texture;
     this.cellWidth = (this.canvas.width - this.innerBorderWidth*this.columnsAm)/this.columnsAm;
     this.cellHeight = (this.canvas.height - this.innerBorderWidth*this.rowsAm)/this.rowsAm;
-    
     this.initCells()
     this.ctx = canvas.getContext('2d');
     this.gameOver = false;

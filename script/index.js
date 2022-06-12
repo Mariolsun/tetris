@@ -23,19 +23,19 @@ function scoreBoardCoordsForFigure(figure) {
   let nextFigureCoords = {};
   switch(figure.type) {
     case 'I':
-      nextFigureCoords = {x: 1, y: 1};
+      nextFigureCoords = {x: 1, y: 2};
       break;
     case 'J':
     case 'T':
     case 'Z':
-      nextFigureCoords = {x: 1, y: 1};
+      nextFigureCoords = {x: 1, y: 2};
       break;
     case 'L':
     case 'S':
-      nextFigureCoords = {x: 1, y: 1};
+      nextFigureCoords = {x: 1, y: 2};
       break;
     case 'O':
-      nextFigureCoords = {x: 2, y: 1};
+      nextFigureCoords = {x: 2, y: 2};
       break;
   }
   return nextFigureCoords;
@@ -86,7 +86,8 @@ game.onReset(resetGame);
 field = new Field(gameCanvas, game);
 field.newFigure(new Figure(), {x: 5, y: 0});
 
-nextFigureField = new Field(nextFigureCanvas, 2, 4);
+nextFigureField = new Field(nextFigureCanvas, {}, 4, 4);
+//nextFigureField.innerBorderWidth = 0;
 backField = new BackField(backCanvas);
 
 backField.rowsAm = 40; // костыль, нужно причесать класс field и его потомков 
@@ -99,6 +100,7 @@ backField.initCells();
 backField.render();
 
 let  nextFigure = new Figure()
+nextFigure.rotate(2);
 nextFigureField.newFigure(nextFigure, scoreBoardCoordsForFigure(nextFigure));
 nextFigureField.render();
 
@@ -265,7 +267,6 @@ if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) 
   window.addEventListener("load",function() {
       setTimeout(function() {
           window.scrollTo(0, 1);
-          console.log('hid safari address bar');
       }, 1000);
   });
 }

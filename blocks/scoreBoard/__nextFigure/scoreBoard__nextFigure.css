@@ -1,13 +1,17 @@
 .scoreBoard__nextFigure {
     width: 100%;
     margin-top: 10px;
+    width: 8vw;
+    height: 8vw;
+    align-self: center;
+    justify-self: center;
 }
 
 @media screen and (orientation: portrait) {
     .scoreBoard__nextFigure {
        margin-top: 0;
-       margin-left: 10%;
-       max-width: 50%;
+       margin-left: 0;
+       max-width: 80%;
     }
     
 }
