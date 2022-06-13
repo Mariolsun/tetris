@@ -2,6 +2,7 @@ const gameCanvas = document.getElementById('tetris');
 const nextFigureCanvas = document.getElementById('nextFigure');
 const backCanvas = document.getElementById('backGround');
 const nextFigureElem = document.querySelector('.scoreBoard__nextFigure');
+const scoreBoardElem = document.querySelector('.scoreBoard');
 const scoreElem = document.querySelector('.scoreBoard__score');
 const pauseBannerElem = document.querySelector('.pause-banner');
 const pauseBannerText = pauseBannerElem.querySelector('.pause-banner__text');
@@ -59,14 +60,7 @@ function resetGame(tick, flowFunc) {
     game.score = 0;
 }
 
-/*(function init100vh(){
-  function setHeight() {
-    var vh = window.screen.height * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  }
-  setHeight();
-  window.addEventListener('resize', setHeight);
-})(); */
+
 
 
 
@@ -84,10 +78,12 @@ let pauseBanner = new PauseBanner(pauseBannerElem, pauseBannerText);
 let game = new Game(scoreElem, pauseBanner);
 game.onReset(resetGame);
 field = new Field(gameCanvas, game);
+field.makeGrid(1,'rgb(220,220,220');
 field.newFigure(new Figure(), {x: 5, y: 0});
-
 nextFigureField = new Field(nextFigureCanvas, {}, 4, 4);
-//nextFigureField.innerBorderWidth = 0;
+//nextFigureField.ctx.canvas.style.width = '50px';
+//nextFigureField.ctx.canvas.style.height = '50px';
+nextFigureField.ct
 backField = new BackField(backCanvas);
 
 backField.rowsAm = 40; // костыль, нужно причесать класс field и его потомков 
@@ -109,9 +105,7 @@ const flowFunc = function() {
   if(field.gameOver) {
     game.gameOver();
   }
-/*  for(let i = 0; i < field.columnsAm; i++) {
-    field.renderCell(i, 1, 'black');
-  } */
+
   if (field.isFigureFin()) {
 
     let wholeRows = field.getWholeRows();
@@ -134,7 +128,6 @@ const flowFunc = function() {
   }
   
   field.moveFigure('down');
- // game.updateTick();
 }
 
 
@@ -143,35 +136,6 @@ const flowFunc = function() {
 
 game.reset(1250, flowFunc);
 
-
-/*function mobileGameTouchhandler(event) {
-    event.preventDefault();
-    let figureCoords = field.getFigureRealCoords();
-    let action;
-    let canvasRect = gameCanvas.getBoundingClientRect();
-    let left = event.touches[0].pageX - canvasRect.left;
-    let top = event.touches[0].pageY - canvasRect.top;
-    console.log(JSON.stringify(figureCoords));
-    console.log(`x ${left} y ${top}`);
-    if(figureCoords.min.x - 50 < left && left < figureCoords.max.x + 50 && figureCoords.min.y - 50 < top && top < figureCoords.max.y + 50) {
-      action = 'rotate';
-    } else if(figureCoords.max.y  + 20 < top) {
-      console.log('down');
-      action = 'down';
-    } else if(figureCoords.min.x > left) {
-      action = 'left';
-    } else if(figureCoords.max.x < left) {
-      action = 'right';
-    }
-    console.log(`event fired action: ${action}`);
-    field.moveFigure(action);
-}
-
-function mobileGameStartEvent () {
- // game.start()
-  window.removeEventListener('touchend', mobileGameStartEvent);
-  gameCanvas.addEventListener('touchend', mobileGameTouchhandler)
-} */
 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
   pauseBannerElem.style.display = 'none';

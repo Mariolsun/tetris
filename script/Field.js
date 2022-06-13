@@ -6,11 +6,9 @@ class Field {
     this.rowsAm = rowsAm;
     this.columnsAm = columnsAm;
     this.canvas = canvas;
-    this.innerBorderWidth = 1;
+    this.innerBorderWidth = 0;
     this.backgroundColor = 'white';
- //   this.texture = texture;
-    this.cellWidth = (this.canvas.width - this.innerBorderWidth*this.columnsAm)/this.columnsAm;
-    this.cellHeight = (this.canvas.height - this.innerBorderWidth*this.rowsAm)/this.rowsAm;
+    this.updateSizes();
     this.initCells()
     this.ctx = canvas.getContext('2d');
     this.gameOver = false;
@@ -285,52 +283,32 @@ dropUpperRows(rows) {
 
 
 
-//  console.log(`dropping rows ${row} ${k}`);
-
- /* let isEmptyRow = false;
-  
-  let j = 1;
-  while(!isEmptyRow && j < this.rowsAm) {
-    isEmptyRow = true;
-    for(let i = 0; i < this.columnsAm; i++) {
-        if(!this.cells[i][row - j].isEmpty) {
-          isEmptyRow = false;
-          this.moveCell(i, row - j, i, row-j+k);
-      }
-    }
- //   console.log(`\n\n\n\n\n\n\n`);
-    j++; */
-  
-//  console.log(`dropped down ${j} rows starting with ${row}`);
 
 
 deleteRows() {
 
   let rows = this.getWholeRows();
- // console.log(`\n\n\n\n\n\n\n`);
  
  console.log(`deleting ${JSON.stringify(rows)}`);
   
   if(rows.length !== 0) {
     rows.forEach(row => {
       for(let i=0; i < this.columnsAm; i++) {
-    /*    function sleep(milliseconds) {
-          const date = Date.now();
-          let currentDate = null;
-          do {
-            currentDate = Date.now();
-          } while (currentDate - date < milliseconds);
-        }
-        sleep(1000); */
         this.clearCell(i, row);
       }
     });
     this.dropUpperRows(rows);
     }
-  //  console.log(`deleted`);
- //   console.log(`\n\n\n\n\n\n\n`);
-}
 
+}
+makeGrid(gridWidth, color) {
+  this.innerBorderWidth = gridWidth;
+  this.ctx.fillStyle = color;
+  this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+  this.updateSizes();
+  this.initCells();
+  this.render();
+}
 
 }
 
